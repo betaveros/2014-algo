@@ -12,6 +12,7 @@
     <style>table.centertable td, table.centertable th { text-align: center; }</style>
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
+    <style>.reveal sup, .reveal sub { font-size: 75%; }</style>
 
     <!-- If the query includes 'print-pdf', include the PDF print sheet -->
     <script>
@@ -251,7 +252,7 @@ isPrime n
               <li>等回傳AC, WA, TLE*</li>
               <li>下一題</li>
             </ul>
-            <p>有些比賽很殘忍的不會先回傳訊息。Codeforces、TopCoder都靠pretests。USACO什麼都沒有，不過它至少有部分分數。</p>
+            <p>線上賽似乎都很殘忍的只回傳部分訊息</p>
           </section>
           <section>
             <img src="cf1.png" alt="Codeforces AC!" width="627" height="221" />
@@ -758,7 +759,7 @@ int main() {
         <section>
           <h2>很不正常的例子</h2>
           <h3>NPSC 2008 高中組決賽pB: 幼稚國王去旅行</h3>
-          <p>Zerojudge b209。請自己閱讀題目。</p>
+          <p><a href="http://zerojudge.tw/ShowProblem?problemid=b209">Zerojudge b209</a>。請自己閱讀題目。還沒有AC過競賽題目的人可以先寫它。</p>
         </section>
         <section>
           <section>
@@ -774,6 +775,21 @@ int main() {
             <p>⋯⋯</p>
             <p>每次掃描，「選擇」剩下元素最小的移到左邊</p>
             <p>（如何選擇最小的元素？）</p>
+          </section>
+          <section>
+            <h2>Selection Sort（選擇排序法）</h2>
+            <pre><code data-trim class="cpp">
+for (int i = 0; i &lt; length; i++) {
+  int minIndex = i;
+  for (int j = i + 1; j &lt; length; j++) {
+    if (a[j] &lt; a[minIndex]) minIndex = j;
+  }
+  if (minIndex != i) {
+    int tmp = a[i]; a[i] = a[minIndex]; a[minIndex] = t;
+    // swap(a[i], a[minIndex]); in &lt;algorithm&gt;
+  }
+}
+            </code></pre>
           </section>
           <section>
             <h2>Insertion Sort（插入排序法）</h2>
@@ -793,13 +809,35 @@ int main() {
             </ul>
             <p>★ VisualSort的動畫其實不準，正統的Merge sort需要額外記憶體暫存（不然合併的時候會一直動到中間的元素，幾乎跟Insertion Sort一樣差）</p>
           </section>
+          <section>
+            <h2>排序(Sorting)</h2>
+            <p>排序演算法還有很多。有實際用途的包括：</p>
+            <ul>
+              <li>quicksort</li>
+              <li>heap sort</li>
+              <li>counting sort</li>
+              <li>radix sort</li>
+            </ul>
+            <p>沒有實際用途的包括：</p>
+            <ul>
+              <li>bubble sort</li>
+              <li>gnome sort</li>
+              <li>stooge sort</li>
+              <li>bogosort</li>
+              <li>...</li>
+            </ul>
+          </section>
         </section>
         <section>
           <section>
-            <h2>Time Complexity</h2>
+            <h2>Time Complexity 時間複雜度</h2>
             <p>程式跑得夠快很重要（不然會<strong>TLE</strong>！）</p>
-            <pre><code data-trim class="nohighlight">
-$ time ./fairphoto
+            <p>不過怎麼知道「多快」呢？</p>
+          </section>
+          <section>
+            <h2>Time Complexity 時間複雜度</h2>
+            <pre><code data-trim data-noescape class="bash">
+$ time ./<a href="http://usaco.org/index.php?page=viewproblem2&cpid=436" style="text-decoration: underline">fairphoto</a>
 real   0m0.771s
 user   0m0.763s
 sys    0m0.005s
@@ -818,11 +856,122 @@ sys    0m0.005s
             </code></pre>
           </section>
           <section>
-            <h2>Time Complexity</h2>
+            <h2>Time Complexity 時間複雜度</h2>
+            <p>不能只用跑的⋯⋯</p>
+            <pre><code data-trim data-noescape class="cpp">
+for (int i = 0; i &lt; length; i++) {
+  int minIndex = i;
+  for (int j = i + 1; <span class="fragment highlight-red">j &lt; length; j++</span>) {
+    <span class="fragment highlight-red">if (a[j] &lt; a[minIndex]) minIndex = j;</span>
+  }
+  if (minIndex != i) {
+    swap(a[i], a[minIndex]);
+  }
+}
+            </code></pre>
+            <p>那一步會被跑最多次？</p>
+          </section>
+          <section>
+            <h2>Time Complexity 時間複雜度</h2>
+            <pre><code data-trim class="cpp">
+for (int i = 0; i &lt; length; i++) {
+  int minIndex = i;
+  for (int j = i + 1; j &lt; length; j++) {
+    if (a[j] &lt; a[minIndex]) minIndex = j;
+  }
+  if (minIndex != i) {
+    swap(a[i], a[minIndex]);
+  }
+}
+            </code></pre>
+            <p class="fragment">檢查<code>j &lt; length</code>會被執行n(n+1)/2次</p>
+            <p class="fragment"><code>j++</code>會被執行n(n-1)/2次。</p>
+            <p class="fragment"><code>a[j] &lt; a[minIndex]</code>會被執行n(n-1)/2次。(n = length)</p>
+            <p class="fragment"><code>minIndex = j;</code>會被執行0次~n(n-1)/2次。</p>
+          </section>
+          <section>
+            <h2>可是還是不能直接算出處理器要幾「步」</h2>
+            <pre><code data-trim class="asm">
+100000e54: 44 8b 1d bd 01 00 00  mov    0x1bd(%rip),%r11d
+100000e5b: 45 85 db              test   %r11d,%r11d
+100000e5e: 7e 5a                 jle    100000eba &lt;__Z7selsortv+0x6a&gt;
+100000e60: 41 b8 01 00 00 00     mov    $0x1,%r8d
+100000e66: 45 31 d2              xor    %r10d,%r10d
+100000e69: 48 8d 15 b0 01 00 00  lea    0x1b0(%rip),%rdx
+100000e70: 4d 8d 4a 01           lea    0x1(%r10),%r9
+100000e74: 45 39 d9              cmp    %r11d,%r9d
+100000e77: 4c 89 c1              mov    %r8,%rcx
+100000e7a: 44 89 d7              mov    %r10d,%edi
+100000e7d: 7d 3b                 jge    100000eba &lt;__Z7selsortv+0x6a&gt;
+            </code></pre>
+            <p>@_@</p>
+          </section>
+          <section>
+            <h2>怎麼辦？</h2>
+          </section>
+          <section>
+            <h2>Big-O Notation</h2>
+            <p>c<sub>1</sub>n(n+1)/2 + c<sub>2</sub>n(n-1)/2 + c<sub>3</sub>n + &hellip;</p>
+            <p class="fragment">(c<sub>1</sub>/2 + c<sub>2</sub>/2) × n<sup>2</sup> + &hellip;</p>
+            <p class="fragment"><strong>O(n<sup>2</sup>)</strong></p>
+            <p class="fragment">f(x) ∈ O(g(x)) &hArr; ∃ M, x<sub>0</sub> s.t. ∀ x &gt; x<sub>0</sub>, |f(x)| ≤ M|g(x)|</p>
+            <p class="fragment">（更嚴謹的話可以寫Θ(n<sup>2</sup>)）</p>
+          </section>
+          <section>
+            <h2>Big-O Notation</h2>
+            <p>通常常數不會太大，演算法要跑完的重點是當n很大的時候造成的時間成長</p>
+            <p>目標大概是「10<sup>7</sup>件事情」</p>
+          </section>
+          <section>
+            <h2>Big-O Notation</h2>
+            <p><a href="https://en.wikipedia.org/wiki/Time_complexity#Table_of_common_time_complexities">Wikipedia</a> |
+            <a href="https://zh.wikipedia.org/wiki/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6#.E5.B8.B8.E8.A7.81.E6.97.B6.E9.97.B4.E5.A4.8D.E6.9D.82.E5.BA.A6.E5.88.97.E8.A1.A8">維基百科</a></p>
+            <table>
+              <tr><th>O</th><th>n?</th></tr>
+              <tr><td>O(log n)</td><td>10<sup>100</sup>+</td></tr>
+              <tr><td>O(n)</td><td>10<sup>6</sup> ~ 10<sup>7</sup></td></tr>
+              <tr><td>O(n log n)</td><td>10<sup>5</sup> ~ 3 × 10<sup>5</sup></td></tr>
+              <tr><td>O(n<sup>2</sup>)</td><td>10<sup>3</sup> ~ 3 × 10<sup>3</sup></td></tr>
+              <tr><td>O(n<sup>3</sup>)</td><td>100</td></tr>
+              <tr><td>O(2<sup>n</sup>)</td><td>20 ~ 25</td></tr>
+              <tr><td>O(n!)</td><td>8 ~ 10</td></tr>
+            </table>
+          </section>
+          <section>
+            <h2>Big-O Notation例外</h2>
+            <p><a href="http://codeforces.com/contest/356/problem/D">Codeforces 207 Div 1 D: Bags and Coins</a></p>
+            <p>不用位元運算硬壓到常數÷32就會</p>
+            <ul>
+              <li>TLE</li>
+              <li>TLE</li>
+              <li>TLE</li>
+              <li>TLE</li>
+            </ul>
+            <p>不過這種題目很少</p>
           </section>
         </section>
         <section>
-          <h2>Exponentiation</h2>
+          <section>
+            <h2>Exponentiation</h2>
+            <p>其實競賽中幾乎永遠都是Modular exponentiation，因為大數又難寫又把複雜度搞得亂七八糟</p>
+            <p>「請輸出答案mod 10<sup>9</sup> + 7」（是質數）</p>
+          </section>
+          <section>
+            <h2>Exponentiation</h2>
+            <p>10<sup>123456789</sup> mod 10<sup>9</sup> + 7</p>
+            <pre class="fragment"><code data-trim class="cpp">
+long long p = 1;
+for (int i = 0; i &lt; 123456789; i++) {
+    p = (10 * p) % 1000000007;
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>Exponentiation</h2>
+            <p>10<sup>123456789</sup> = 10<sup>123456788</sup> × 10 mod 10<sup>9</sup> + 7</p>
+            <p class="fragment">挑戰計算：2<sup>10<sup>16</sup></sup> mod 10<sup>17</sup> + 3</p>
+            <p class="fragment">Hint: 10<sup>123456789</sup> = 10<sup>61728394</sup> × 10<sup>61728394</sup> × 10</p>
+          </section>
         </section>
         <section>
           <h2>Prime Testing</h2>
