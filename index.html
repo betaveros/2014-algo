@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="en">
+  <!-- vim:set et ts=2 sw=2 sts=2: -->
+  <head>
+    <meta charset="utf-8">
+    <title>演算法／陳伯恩</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+    <style>table.centertable td, table.centertable th { text-align: center; }</style>
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>演算法</h1>
+          <p>2014/10/19 陳伯恩</p>
+          <p>(created with reveal.js-2.6.2)</p>
+        </section>
+
+        <section>
+          <section>
+            <h2>程式世界之大</h2>
+          </section>
+          <section>
+            <h2>C(++)</h2>
+            <ul>
+              <li>資訊比賽基本上全靠它</li>
+              <li>古老，所以很多人用</li>
+              <li>低階，貼近機器</li>
+              <li>程式跑得快而且記憶體用的直接，但寫起來比較累</li>
+            </ul>
+          <pre><code data-trim class="cpp">
+bool isPrime(int n) {
+    if (n &lt;= 1) return false;
+    for (int p = 2; p * p &lt;= n; p++) {
+        if (n % p == 0) return false;
+    }
+    return true;
+}
+          </code></pre>
+          </section>
+          <section>
+            <h2>Python</h2>
+            <ul>
+              <li>個人推薦初學者語言</li>
+              <li>美國大學趨勢</li>
+              <li>高階，簡單，配件多</li>
+            </ul>
+          <pre><code data-trim class="python">
+from math import sqrt
+def isPrime(n):
+    if n &lt;= 1: return False
+    for p in range(2, int(sqrt(n))):
+        if n % p == 0: return False
+    return True
+          </code></pre>
+          </section>
+          <section>
+            <h2>JavaScript</h2>
+            <ul>
+              <li>網路的語言！這個投影片背後就是它</li>
+              <li>雖然名字類似，但跟「Java」語言其實不像</li>
+              <li>設計有不少（公認為的）缺點⋯⋯例如，沒有整數，只有浮點數⋯⋯</li>
+              <li><code>[1] != [1]</code>, <code>[1] == 1</code>!?</li>
+            </ul>
+          <pre><code data-trim class="javascript">
+function isPrime(n) {
+    for (var p = 2; p * p &lt;= n; p++) {
+        if (n % p == 0) return false;
+    }
+    return true;
+}
+          </code></pre>
+          </section>
+          <section>
+            <h2>Haskell</h2>
+            <ul>
+              <li>個人嗜好</li>
+              <li>純函數式語言，充滿高等數學抽象代數(abstract algebra)跟範疇論(category theory)的東西</li>
+              <li>學習Haskell會強迫你重新學習如何寫程式</li>
+            </ul>
+          <pre><code data-trim class="haskell">
+isPrime :: (Integral a) =&gt; a -&gt; Bool
+isPrime n
+      | n &lt;= 1 = False
+      | otherwise = all ((/= 0) . (n `mod`)) $
+            takeWhile ((&lt;= n) . (^2)) [2..]
+          </code></pre>
+          </section>
+          <section>
+            <h2>以上語言選擇純屬個人觀點</h2>
+            <p>程式語言超級多，每個人喜好不同</p>
+            <ul>
+              <li>C++ ~ Java, Objective-C, C#, D, Go, Rust</li>
+              <li>Python, JavaScript ~ Perl, PHP, Ruby, Lua</li>
+              <li>compile to JavaScript ~ CoffeeScript, Coco, LiveScript</li>
+              <li>Haskell ~ OCaml/SML, F#, Scala</li>
+              <li>還有一大群Lisp: Common Lisp, Scheme, Clojure, Racket</li>
+              <li>看<a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">TIOBE index</a>（雖然它的算法也飽受批評）</li>
+            </ul>
+          </section>
+          <section>
+            <h2>更別說模組了</h2>
+            <p>假設你要<a href="https://wiki.python.org/moin/WebFrameworks/">用Python寫個網站好了</a></p>
+            <ul>
+              <li>Django?</li>
+              <li>Pyramid?</li>
+              <li>TurboGears?</li>
+              <li>Zope2?</li>
+              <li>CubicWeb?</li>
+              <li>Flask?</li>
+              <li>???</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>學程式要做什麼？</h2>
+            <ul>
+              <li>比賽</li>
+              <li>寫網頁</li>
+              <li>寫遊戲</li>
+              <li>工作面試</li>
+              <li>協助科展</li>
+              <li>好玩</li>
+            </ul>
+          </section>
+          <section>
+            <img src="sortgnu.png" alt="Joshua Schulter's Gnome Sort implementation in Piet" width="1026" height="308"/>
+            <p><a href="http://www.dangermouse.net/esoteric/piet/samples.html">Piet Program Gallery</a></p>
+            <p>&copy; Joshua Schulter under <a href="gpl-2.0.txt">GPL</a></p>
+          </section>
+          <section>
+            <h2>學演算法要做什麼？</h2>
+            <ul>
+              <li><strong>比賽</strong></li>
+            </ul>
+            <p>
+            當然做其他事情也需要學演算法，但更會遇到很多架構的問題（如何把子程序、物件寫整齊，以便日後修改或是測試），或是需要學習用各種模組跟API（如何用程式在Facebook上貼文），或是debug。
+            </p>
+          </section>
+        </section>
+        <section data-background="#990000">
+          <h2>不相關的話到這邊</h2>
+        </section>
+        <section>
+          <section>
+            <h2>演算法是什麼？</h2>
+            <ul>
+              <li>有限(finite)</li>
+              <li>明確(definite)</li>
+              <li>輸入(input)(零個或更多)</li>
+              <li>輸出(output)</li>
+              <li>有效(effective)</li><!-- example: addition -->
+            </ul>
+            <p>(Knuth, <i>The Art of Computer Programming</i>)</p>
+          </section>
+          <section>
+            <h2>演算法是什麼？</h2>
+            <img src="324px-LampFlowchart_ZhT.svg.png" alt="flowchart" width="324" height="442" />
+            <p>Source: <a href="https://commons.wikimedia.org/wiki/File:LampFlowchart_ZhT.svg">Wikicommons</a></p>
+            <p>這是演算法嗎？</p>
+          </section>
+          <section>
+            <h2>演算法是什麼？</h2>
+            <p>例如：</p>
+            <ul>
+              <li>GCD</li>
+              <li>排序：如何把一個數列重排成遞增的？</li>
+              <li>快速冪：如何計算b<sup>n</sup> mod m?</li>
+              <li>質數判斷；質因數分解<ul><li>RSA加密法就是依靠沒有快速的質因數分解演算法</li></ul></li>
+              <li>凸包：給定一些平面上的點，如何計算它們的凸包頂點？</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>GCD</h2>
+            <p>gcd(a, b) = ?</p>
+            <ol>
+              <li>If b = 0 then gcd(a, b) = a</li>
+              <li>If b ≠ 0 then gcd(a, b) = gcd(b, a mod b)</li>
+            </ol>
+            <p>「= 0」、「mod」是有限、明確、有效的。</p>
+            <p>在GCD裡面再計算一次GCD是明確、有效的（做同樣的判斷、計算，直到有答案為止）。</p>
+            <p>是有限的（為什麼？）</p>
+          </section>
+          <section>
+            <h2>GCD</h2>
+            <table class="centertable">
+              <tr><th>a</th><th>b</th></tr>
+              <tr><td>39</td><td>15</td></tr>
+              <tr class="fragment"><td colspan="2">39 mod 15 = 9</td></tr>
+              <tr class="fragment"><td>15</td><td>9</td></tr>
+              <tr class="fragment"><td colspan="2">15 mod 9 = 6</td></tr>
+              <tr class="fragment"><td>9</td><td>6</td></tr>
+              <tr class="fragment"><td colspan="2">9 mod 6 = 3</td></tr>
+              <tr class="fragment"><td>6</td><td>3</td></tr>
+              <tr class="fragment"><td colspan="2">6 mod 3 = 0</td></tr>
+              <tr class="fragment"><td>3</td><td>0</td></tr>
+              <tr class="fragment"><td colspan="2">gcd(39, 15) = &hellip; = gcd(3, 0) = 3</td></tr>
+            </table>
+          </section>
+        </section>
+        <section>
+          <h2>比賽中的演算法是什麼？</h2>
+          <ul>
+            <li>有限(在時限內跑完)</li>
+            <li>明確(能寫成程式碼)</li>
+            <li>輸入(出題者給的)</li>
+            <li>輸出(必須跟出題者相符)</li>
+            <li>有效(能寫成程式碼)</li>
+          </ul>
+        </section>
+        <section>
+          <h2>比賽</h2>
+          <ul>
+            <li>學科能力競賽－校內賽、地區賽、全國賽</li>
+            <li>選訓營、IOI</li>
+            <li>NPSC (@ 台大)</li>
+            <li>ACM-ICPC</li>
+            <li>網上：Codeforces, TopCoder, USACO, Google Code Jam etc.</li>
+          </ul>
+        </section>
+        <section>
+          <section>
+            <h2>比賽時在幹嘛？</h2>
+            <ul>
+              <li>讀題目</li><!-- bring IOI problems to read -->
+              <li>寫程式</li>
+              <li>上傳</li>
+              <li>等回傳AC, WA, TLE*</li>
+              <li>下一題</li>
+            </ul>
+            <p>有些比賽很殘忍的不會先回傳訊息。Codeforces、TopCoder都靠pretests。USACO什麼都沒有，不過它至少有部分分數。</p>
+          </section>
+          <section>
+            <img src="cf1.png" alt="Codeforces AC!" width="627" height="221" />
+          </section>
+          <section>
+            <img src="cf2.png" alt="Codeforces WA!" width="624" height="324" />
+          </section>
+          <section>
+            <img src="poj.png" alt="POJ lots of crazy errors" width="522" height="229" />
+            <blockquote>
+              為信仰而戰！<br/>
+              遍、地、開、WA！<br/>
+              &mdash; rilak
+              <!-- https://www.facebook.com/SEVEnRilak/posts/645397128865575 -->
+            </blockquote>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>前提</h2>
+            <ul>
+              <li>宣告變數、四（五）則運算、輸入輸出</li>
+              <li>定義、呼叫函數／子程序</li>
+              <li>比較運算子</li>
+              <li>if, while, for</li>
+              <li>數組(array)</li>
+            </ul>
+            <p>學過的先做一下題目吧。例如挑戰2013 NPSC高中組決賽破台。(先做A, C, G)</p>
+          </section>
+          <section>
+            <h2>宣告變數、四（五）則運算、輸入輸出</h2>
+            <pre><code data-trim class="cpp">
+int a, b;
+cin &gt;&gt; a &gt;&gt; b;
+cout &lt;&lt; a + b &lt;&lt; endl;
+cout &lt;&lt; a - b &lt;&lt; endl;
+cout &lt;&lt; a * b &lt;&lt; endl;
+cout &lt;&lt; a / b &lt;&lt; endl; // !!!
+cout &lt;&lt; a % b &lt;&lt; endl; // mod
+//   7  / 3 = ?
+// (-7) / 3 = ?
+// (-7) % 3 = ?
+            </code></pre>
+          </section>
+          <section>
+            <h2>宣告變數、四（五）則運算、輸入輸出</h2>
+            <pre><code data-trim class="cpp">
+int x; // -2^31 ~ 2^31 - 1（通常）
+double y; // 浮點，可表示。不完全精確，所以比較時請小心
+// 例：abs(y - yy) &lt; 1e-8
+long long z; // -2^63 ~ 2^63 - 1（通常）
+
+// 常需要打"long long"都會感到困擾。
+typedef long long ll;
+ll y;
+// 請不要在競賽外這樣寫
+            </code></pre>
+          </section>
+          <section>
+            <h2>定義、呼叫函數／子程序</h2>
+            <pre><code data-trim class="cpp">
+#include &lt;iostream&gt;
+using namespace std;
+int cube(int x) {
+    return x * x * x;
+}
+int main() {
+    cout &lt;&lt; cube(7) &lt;&lt; endl;
+}
+            </code></pre>
+            <p>順帶一提，競賽爭手速跟思考速度，在程式競賽之外寫<code>using namespace std;</code>其實不是好習慣</p>
+          </section>
+          <section>
+            <h2>比較運算子</h2>
+            <pre><code data-trim class="cpp">
+int a, b;
+cin &gt;&gt; a &gt;&gt; b;
+if (a == b) cout &lt;&lt; "相等" &lt;&lt; endl;
+if (a != b) cout &lt;&lt; "不相等" &lt;&lt; endl;
+if (a &lt; b) cout &lt;&lt; "小於" &lt;&lt; endl;
+if (a &gt; b) cout &lt;&lt; "大於" &lt;&lt; endl;
+if (a &lt;= b) cout &lt;&lt; "小於等於" &lt;&lt; endl;
+if (a &gt;= b) cout &lt;&lt; "大於等於" &lt;&lt; endl;
+            </code></pre>
+            <p>單獨<code>!</code>就是「非」的意思，跟<code>=</code>結合為「不等於」很好記。（晚一點會看到）</p>
+          </section>
+          <section>
+            <h2>if, while, for</h2>
+            <pre><code data-trim class="cpp">
+#include &lt;iostream&gt;
+void printTwoFactors(int x) {
+    int c = 0;
+    while (x % 2 == 0) { x /= 2; c++; } // 被執行零至多次，直到x是奇數為止
+    if (c &gt; 0) { // 執行一次，或不執行
+        cout &lt;&lt; "2^" &lt;&lt; c &lt;&lt; " * " &lt;&lt; x &lt;&lt; endl;
+    } else { // if後的else可加可不加
+        cout &lt;&lt; x &lt;&lt; endl;
+    }
+}
+int main() {
+    for (int i = 0; i &lt; 100; i++) { // 最常用法
+        printTwoFactors(i); // i會跑遍1到100
+    }
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>數組(array)</h2>
+            <p><code>int a0, a1, a2, a3, ..., a99;</code></p>
+            <p>⇒ <code>int a[100];</code></p>
+            <p><code>a[0], a[1], a[2], ..., a[99];</code></p>
+            <pre><code data-trim class="cpp">
+#include &lt;iostream&gt;
+int div[100];
+int main() {
+    for (int i = 1; i &lt; 100; i++) {
+        for (int j = i; j &lt; 100; j += i) { // j = i, 2i, 3i...
+            div[j]++;
+        }
+        cout &lt;&lt; i &lt;&lt; ": " &lt;&lt; div[i] &lt;&lt; endl;
+    }
+}
+            </code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>進階語法</h2>
+            <p>初階可以先跳過；大約照重要性跟實用性遞減排序。</p>
+            <p>我寫的有點過火，不用看完</p>
+            <ul>
+              <li><code>?:</code></li>
+              <li>邏輯運算子</li>
+              <li><code>&lt;algorithm&gt;</code>, <code>&lt;vector&gt;</code></li>
+              <li>struct</li>
+              <li><code>&lt;cstdio&gt;</code></li>
+            </ul>
+          </section>
+          <section>
+            <h2><code>?:</code></h2>
+            <p>可以當成一個值或算式的<code>if</code>/<code>else</code></p>
+            <pre><code data-trim class="cpp">
+if (a == 1) {
+    cout &lt;&lt; b &lt;&lt; endl;
+} else {
+    cout &lt;&lt; (-b) &lt;&lt; endl;
+}
+            </code></pre>
+            <p>↕</p>
+            <pre><code data-trim class="cpp">
+cout &lt;&lt; (a == 1 ? b : (-b)) &lt;&lt; endl;
+            </code></pre>
+            <p>另外，<code>==</code>跟其他比較式的結果都也是數字：0（false、假）或1（true、真）</p>
+            <p><code>if</code>、<code>while</code>、<code>for</code>、<code>?:</code>都把0當成false，≠0當成true。不過你不知道這件事寫出來的程式會比較可讀。</p>
+          </section>
+          <section>
+            <h2>邏輯運算子</h2>
+            <p><code>&amp;&amp;</code>, <code>||</code>, <code>!</code></p>
+            <p>and, or, not</p>
+            <p>「且」、「或」、「非」</p>
+            <p><code>1 &amp;&amp; 1</code> = 1</p>
+            <p><code>1 &amp;&amp; 0</code> = <code>0 &amp;&amp; 1</code> = <code>0 &amp;&amp; 0</code> = 0</p>
+            <p><code>1 || 1</code> = <code>1 || 0</code> = <code>0 || 1</code> = 1</p>
+            <p><code>0 || 0</code> = 0</p>
+            <pre><code data-trim class="cpp">
+if (a == 0 || b == 0) {
+    cout &lt;&lt; "至少有一個0";
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2><code>&lt;algorithm&gt;</code>, <code>&lt;vector&gt;</code></h2>
+            <pre><code data-trim class="cpp">
+#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+using namespace std;
+int a[100];
+vector&lt;int&gt; v;
+int main() {
+    for (int i = 0; i &lt; 100; i++) {
+        scanf("%d", &amp;a[i]);
+    }
+    for (int i = 0; i &lt; 100; i++) {
+        int x; scanf("%d", &amp;x);
+        v.push_back(x); // !
+    }
+    sort(a, a + 100); // !!
+    sort(v.begin(), v.end()); // !!!
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>struct</h2>
+            <pre><code data-trim class="cpp">
+#include &lt;cmath&gt;
+struct Point {
+    int x;
+    int y;
+};
+Point pts[100];
+vector&lt;Point&gt; ptv;
+double dist(Point a, Point b) {
+    double xd = a.x - b.x;
+    double yd = a.y - b.y;
+    return std::sqrt(xd * xd + yd * yd);
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>為什麼要struct</h2>
+            <pre><code data-trim class="cpp">
+#include &lt;bits/stdc++.h&gt;
+struct Point {
+    int x;
+    int y;
+    // ↓↓↓ 這一行基本上要背起來 ↓↓↓
+    bool operator&lt;(const Point &amp; o) const {
+        if (x != o.x) return x &lt; o.x;
+        return y &lt; o.y;
+    }
+};
+vector&lt;Point&gt; ptv;
+int main() {
+    // ... 輸入到ptv之類的 ...
+    sort(ptv.begin(), ptv.end());
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2><code>&lt;cstdio&gt;</code></h2>
+            <p>雖然cin, cout用起來很順手，不過比賽用它遲早會被雷：</p>
+            <p><strong>速度慢！</strong></p>
+            <pre><code data-trim class="cpp">
+#include &lt;cstdio&gt;
+using namespace std;
+int main() {
+    int a, b;
+    scanf("%d%d", &amp;a, &amp;b);
+    printf("%d%d", a, b);
+}
+            </code></pre>
+            <p>C留下來的函數，所以傳入<code>scanf</code>的變數需要用<code>&amp;</code>（包成指標）。</p>
+            <ul>
+              <li><code>%d</code> = int</li>
+              <li><code>%lld</code> OR <code>%I64d</code> (看OS) = long long</li>
+            </ul>
+          </section>
+          <section>
+            <h2>reference</h2>
+            <p>（中文似乎真的翻做「參考」，不過我覺得「別名」比較貼切）</p>
+            <p>函數要修改外面傳進來的變數的時候（常常用來回傳多個值）</p>
+            <pre><code data-trim class="cpp">
+int egcd(int a, int b, int &amp; ac, int &amp; bc) {
+    if (a == 0) { ac = 0; bc = 1; return b; }
+    int g = egcd(b % a, a, bc, ac);
+    ac -= (b / a) * bc;
+    return g;
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2><code>&lt;map&gt;</code></h2>
+            <pre><code data-trim class="cpp">
+int arr[100], sarr[100];
+map&lt;int,int&gt; inv;
+int main() {
+    for (int i = 0; i &lt; 100; i++) {
+        int a;
+        cin &gt;&gt; a;
+        arr[i] = sarr[i] = a;
+    }
+    sort(sarr, sarr + 100);
+    fori (i, 0, 100) inv[sarr[i]] = i;
+    fori (i, 0, 100) {
+        cout &lt;&lt; arr[i] &lt;&lt; " " &lt;&lt; inv[arr[i]] &lt;&lt; endl;
+    }
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2><code>&lt;set&gt;</code></h2>
+            <pre><code data-trim class="cpp">
+set&lt;int&gt; s;
+int main() {
+    for (int i = 0; i &lt; 100; i++) {
+        int a;
+        cin &gt;&gt; a;
+        if (s.count(a)) {
+            cout &lt;&lt; a &lt;&lt; endl;
+        } else {
+            s.insert(a);
+        }
+    }
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2><code>&lt;queue&gt;</code></h2>
+            <p>（在比賽裡）queue用<code>deque</code>模擬就好了，其實想要的是<code>priority_queue</code></p>
+            <pre><code data-trim class="cpp">
+priority_queue&lt;int,vector&lt;int&gt;,greater&lt;int&gt; &gt; q;
+// 傳greater表示希望top要是最小的。
+// 邏輯：不傳的結果是less，平常的priority（優先序）要最大的先做。
+int main() {
+    q.push(1);
+    for (int i = 0; i &lt; 10000; i++) {
+        int x = q.top();
+        q.pop();
+        q.push(x * 2);
+        if (x % 2 == 0) q.push(x * 3);
+    }
+    printf("%d\n", q.top());
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>STL etc.</h2>
+            <ul>
+              <li><code>&lt;deque&gt;</code>, <code>&lt;list&gt;</code></li>
+              <li><code>&lt;queue&gt;</code> → <code>priority_queue</code></li>
+              <li><code>&lt;set&gt;</code> → <code>multiset</code></li>
+              <li><code>&lt;map&gt;</code> → <code>multimap</code></li>
+              <li><code>&lt;utility&gt;</code> → <code>pair</code></li>
+            </ul>
+            <pre><code data-trim class="cpp">
+cout.precision(15);
+cout &lt;&lt; setprecision(15) &lt;&lt; fixed;
+            </code></pre>
+          </section>
+          <section>
+            <h2>預處理器(preprocessor)</h2>
+            <p><strong>千萬不要在競賽或練習以外的場合寫這種鬼東西</strong></p>
+            <pre><code data-trim class="cpp">
+#define fori(i,s,e) for (int i = (s); i &lt; ((int)e); i++)
+// ↑↑↑ 其他常見寫法：FOR, REP
+#define allof(s) (s).begin(), (s).end()
+// ↑↑↑ 其他常見寫法：ALL
+#define scan_d(x) scanf("%d",&amp;(x))
+#define scan_dd(x,y) scanf("%d%d",&amp;(x),&amp;(y))
+vector&lt;int&gt; v;
+int main() {
+    fori (i, 0, 100) {
+        int x; scan_d(x);
+        v.push_back(i + x);
+    }
+    sort(allof(v));
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>預處理器(preprocessor)</h2>
+            <pre><code data-trim class="cpp">
+// #define NDEBUG
+// ↑↑↑ 也影響到&lt;cassert&gt;
+#ifdef NDEBUG
+#define debugf(...) ((void)0)
+#else
+#define debugf(...) fprintf(stderr, __VA_ARGS__)
+#endif
+            </code></pre>
+          </section>
+          <section>
+            <h2>位元運算</h2>
+            <pre><code data-trim class="cpp">
+// 也適用於int，不過純粹拿來做位元運算的數通常用unsigned:
+unsigned int a; // 0 ~ 2^32 - 1
+unsigned long long b; // 0 ~ 2^64 - 1
+cin &gt;&gt; a &gt;&gt; b;
+cout &lt;&lt; (~a) &lt;&lt; endl;
+cout &lt;&lt; (a &amp; b) &lt;&lt; endl;
+cout &lt;&lt; (a | b) &lt;&lt; endl;
+cout &lt;&lt; (a ^ b) &lt;&lt; endl; // 不是冪哦
+cout &lt;&lt; (a &lt;&lt; b) &lt;&lt; endl; // 跟cout的意義完全不相干
+cout &lt;&lt; (a &gt;&gt; b) &lt;&lt; endl; // 跟cin的意義完全不相干
+            </code></pre>
+          </section>
+          <section>
+            <h2>pointer（指標）</h2>
+            <p>C留下來的。通常可以用reference的時候就盡量用reference（不會莫名奇妙爆掉），不過如果要寫複雜的資料結構(treap!!!)就不可避免</p>
+            <pre><code data-trim class="cpp">
+struct Node {
+  int key;
+  Node * lc;
+  Node * rc;
+  Node(int k): key(k), lc(NULL), rc(NULL) {}
+  Node * find(int k) {
+    if (k == key) return this;
+    if (k &lt; key) return (lc == NULL) ? NULL : lc-&gt;find(k);
+    return (rc == NULL) ? NULL : rc-&gt;find(k);
+  }
+};
+            </code></pre>
+          </section>
+          <section>
+            <h2>iterators / foreach</h2>
+            <pre><code data-trim class="cpp">
+vector&lt;int&gt; v;
+int main() {
+    // ... 輸入到v之類的 ...
+    for (vector&lt;int&gt;::iterator it = v.begin();
+        it != v.end();
+        it++) {
+        *it *= 2;
+    }
+    // 下面要編譯器夠新！
+    for (int &amp; x : it) {
+        x *= 2;
+    }
+    for (auto &amp; x : it) {
+        x *= 2;
+    }
+}
+// map&lt;int,char&gt;::iterator it
+// pair&lt;int,char&gt; p = *it
+            </code></pre>
+          </section>
+          <section>
+            <h2>lambda</h2>
+            <p>要編譯器夠新！</p>
+            <pre><code data-trim class="cpp">
+int main() {
+    int x, y, z;
+    auto rotate = [&amp;](){
+        int temp = z;
+        y = x;
+        z = y;
+        x = temp;
+    };
+    cin &gt;&gt; x &gt;&gt; y &gt;&gt; z;
+    cout &lt;&lt; x;
+    rotate();
+    cout &lt;&lt; x;
+    rotate();
+    cout &lt;&lt; x;
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>其他莫名奇妙的運算</h2>
+            <p>真的很少用了，大概只有時限超緊的位元枚舉</p>
+            <pre><code data-trim class="cpp">
+unsigned int a;
+cin &gt;&gt; a;
+cout &lt;&lt; __builtin_clz(a) &lt;&lt; endl;
+cout &lt;&lt; __builtin_ctz(a) &lt;&lt; endl;
+cout &lt;&lt; __builtin_popcount(a) &lt;&lt; endl;
+// __builtin_popcountl(unsigned long)
+// __builtin_popcountll(unsigned long long)
+            </code></pre>
+          </section>
+        </section>
+        <section>
+          <h2>資源</h2>
+          <ul>
+            <li><a href="http://www.tcgs.tc.edu.tw:1218/Problems">Green Judge</a>（台中女中，最多基礎題目）</li>
+            <li><a href="http://zerojudge.tw/">Zerojudge</a>（＊題目品質不一，不過至少可以測NPSC）</li>
+            <li><a href="http://hoj.twbbs.org/judge/">HSNU Online Judge</a>（師大附中，請確實填好資料）</li>
+            <li><a href="http://tioj.ck.tp.edu.tw/">TIOJ Infor Online Judge</a>（建中，原名「Temporary」，Temporary了幾年之後終於脫胎換骨了XD）</li>
+          </ul>
+          <h3>不怕英文的話，多的不得了</h3>
+          <ul>
+            <li><a href="http://codeforces.com/">Codeforces</a></li>
+            <li><a href="http://usaco.org/">USACO</a></li>
+            <li><a href="http://www.topcoder.com/">TopCoder</a></li>
+            <li><a href="http://uva.onlinejudge.org/">UVa Online Judge</a></li>
+            <li><a href="http://www.spoj.com/">Sphere Online Judge</a></li>
+          </ul>
+        </section>
+        <section>
+          <section>
+            <h2>最無聊的A + B Problem</h2>
+            <p>讀入兩個整數（絕對值不會「很大」），輸出這兩個數字之和</p>
+            <p>TIOJ 1002</p>
+            <p>Zerojudge a002 (+必須處理多筆輸入)</p>
+          </section>
+          <section>
+            <h2><code>iostream</code> version</h2>
+            <pre><code data-trim class="cpp">
+#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    int a, b;
+    while (cin &gt;&gt; a &gt;&gt; b)
+        cout &lt;&lt; a + b &lt;&lt; "\n";
+    }
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2><code>cstdio</code> version</h2>
+            <pre><code data-trim class="cpp">
+#include &lt;cstdio&gt;
+using namespace std;
+int main() {
+    int a, b;
+    while (scanf("%d %d", &amp;a, &amp;b) != EOF) {
+        printf("%d\n", a + b);
+    }
+}
+            </code></pre>
+          </section>
+        </section>
+        <section>
+          <h2>很不正常的例子</h2>
+          <h3>NPSC 2008 高中組決賽pB: 幼稚國王去旅行</h3>
+          <p>Zerojudge b209。請自己閱讀題目。</p>
+        </section>
+        <section>
+          <section>
+            <h2>排序(Sorting)</h2>
+            <p>基本的逃不掉。</p>
+            <p>動畫支援～<a href="http://betaveros.github.io/VisualSort/">VisualSort</a></p>
+          </section>
+          <section>
+            <h2>Selection Sort（選擇排序法）</h2>
+            <p>先掃描一次，「選擇」最小的元素移到最左邊</p>
+            <p>再掃描一次，「選擇」第二小的元素移到左邊</p>
+            <p>再掃描一次，「選擇」第三小的元素移到左邊</p>
+            <p>⋯⋯</p>
+            <p>每次掃描，「選擇」剩下元素最小的移到左邊</p>
+            <p>（如何選擇最小的元素？）</p>
+          </section>
+          <section>
+            <h2>Insertion Sort（插入排序法）</h2>
+            <p>第一個元素不用排序</p>
+            <p>第二個元素放到第一個元素前面或後面</p>
+            <p>第三個元素放到前兩個元素前面或中間或後面</p>
+            <p>第四個元素放到前三個元素某處</p>
+            <p>⋯⋯</p>
+            <p>左邊有一串已排序好，每次把右邊的下一個數字「插入」左邊的正確位置</p>
+          </section>
+          <section>
+            <h2>Merge Sort</h2>
+            <p>Divide &amp; Conquer 分而治之</p>
+            <p>排序左半，排序右半，合併！</p>
+            <ul>
+              <li>合併的時候像Selection Sort每次拿最小的，不過因為兩半已經被排序好，所以至多只需要檢查兩個元素</li>
+            </ul>
+            <p>★ VisualSort的動畫其實不準，正統的Merge sort需要額外記憶體暫存（不然合併的時候會一直動到中間的元素，幾乎跟Insertion Sort一樣差）</p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Time Complexity</h2>
+            <p>程式跑得夠快很重要（不然會<strong>TLE</strong>！）</p>
+            <pre><code data-trim class="nohighlight">
+$ time ./fairphoto
+real   0m0.771s
+user   0m0.763s
+sys    0m0.005s
+$ time ./fairphoto
+real   0m0.765s
+user   0m0.758s
+sys    0m0.005s
+$ time ./fairphoto
+real   0m0.781s
+user   0m0.773s
+sys    0m0.006s
+$ time ./fairphoto
+real   0m0.778s
+user   0m0.771s
+sys    0m0.005s
+            </code></pre>
+          </section>
+          <section>
+            <h2>Time Complexity</h2>
+          </section>
+        </section>
+        <section>
+          <h2>Exponentiation</h2>
+        </section>
+        <section>
+          <h2>Prime Testing</h2>
+        </section>
+      </div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+    </script>
+  </body>
+</html>
