@@ -132,6 +132,14 @@ isPrime n
               <li>???</li>
             </ul>
           </section>
+          <section>
+            <h2>還有工具⋯⋯</h2>
+            <table class="reveal centertable">
+            <tr><th>Vim</th><th>Git / GitHub</th></tr>
+            <tr><td><a href="http://www.vim.org/"><img src="vim_editor.gif" alt="[Vim The editor]" width="250" height="120" /></a></td><td><a href="https://github.com/"><img src="octocat.png" alt="[Octocat]" width="224" height="224" /><br/>©® GitHub 2014</a></td></tr>
+            </table>
+            <a href="https://github.com/betaveros/2014-algo">Fork me!</a>
+          </section>
         </section>
         <section>
           <section>
@@ -210,7 +218,7 @@ isPrime n
           </section>
           <section>
             <h2>GCD</h2>
-            <table class="centertable">
+            <table class="reveal centertable">
               <tr><th>a</th><th>b</th></tr>
               <tr><td>39</td><td>15</td></tr>
               <tr class="fragment"><td colspan="2">39 mod 15 = 9</td></tr>
@@ -390,7 +398,6 @@ int main() {
               <li><code>?:</code></li>
               <li>邏輯運算子</li>
               <li><code>&lt;algorithm&gt;</code>, <code>&lt;vector&gt;</code></li>
-              <li>struct</li>
               <li><code>&lt;cstdio&gt;</code></li>
             </ul>
           </section>
@@ -448,6 +455,59 @@ int main() {
             </code></pre>
           </section>
           <section>
+            <h2><code>&lt;cstdio&gt;</code></h2>
+            <p>雖然cin, cout用起來很順手，不過比賽用它遲早會被雷：</p>
+            <p><strong>速度慢！</strong></p>
+            <pre><code data-trim class="cpp">
+#include &lt;cstdio&gt;
+using namespace std;
+int main() {
+    int a, b;
+    scanf("%d%d", &amp;a, &amp;b);
+    printf("%d%d", a, b);
+}
+            </code></pre>
+            <p>C留下來的函數，所以傳入<code>scanf</code>的變數需要用<code>&amp;</code>（包成指標）。</p>
+            <ul>
+              <li><code>%d</code> = int</li>
+              <li><code>%lld</code> OR <code>%I64d</code> (看OS) = long long</li>
+            </ul>
+          </section>
+          <section>
+            <h2><code>&lt;cstdio&gt;</code></h2>
+            <p>不過如果要輸出浮點數的時候⋯⋯</p>
+            <pre><code data-trim class="cpp">
+#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+int main() {
+    double x;
+    printf("%.15lf\n", x);
+    cout &lt;&lt; fixed &lt;&lt; setprecision(15) &lt;&lt; x &lt;&lt; endl;
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2><code>&lt;cstdio&gt;</code></h2>
+            <p>對了，還有字串輸入輸出</p>
+            <p>字串結尾有一個\0 (ascii 0)</p>
+            <pre><code data-trim class="cpp">
+#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+using namespace std;
+char buf[108]; // 小心\r\n\0
+int main() {
+    // 機車的事情是這四個東西處理「讀到什麼時候都不一樣
+    scanf("%100s", buf); // 讀到空白（包括\n），不讀空白本身
+    // buf已經是指標（陣列），所以不用包
+    fgets(buf, 100, stdin); // 讀到\n，會讀\n本身，還會放進buf
+    cin.get(buf, 100); // 讀到\n，不讀\n本身
+    cin.getline(buf, 100); // 讀到\n，會讀\n，但不會寫進buf
+}
+            </code></pre>
+          </section>
+          <section>
             <h2>struct</h2>
             <pre><code data-trim class="cpp">
 #include &lt;cmath&gt;
@@ -481,40 +541,6 @@ vector&lt;Point&gt; ptv;
 int main() {
     // ... 輸入到ptv之類的 ...
     sort(ptv.begin(), ptv.end());
-}
-            </code></pre>
-          </section>
-          <section>
-            <h2><code>&lt;cstdio&gt;</code></h2>
-            <p>雖然cin, cout用起來很順手，不過比賽用它遲早會被雷：</p>
-            <p><strong>速度慢！</strong></p>
-            <pre><code data-trim class="cpp">
-#include &lt;cstdio&gt;
-using namespace std;
-int main() {
-    int a, b;
-    scanf("%d%d", &amp;a, &amp;b);
-    printf("%d%d", a, b);
-}
-            </code></pre>
-            <p>C留下來的函數，所以傳入<code>scanf</code>的變數需要用<code>&amp;</code>（包成指標）。</p>
-            <ul>
-              <li><code>%d</code> = int</li>
-              <li><code>%lld</code> OR <code>%I64d</code> (看OS) = long long</li>
-            </ul>
-          </section>
-          <section>
-            <h2><code>&lt;cstdio&gt;</code></h2>
-            <p>不過如果要輸出浮點數的時候⋯⋯</p>
-            <pre><code data-trim class="cpp">
-#include &lt;cstdio&gt;
-#include &lt;iostream&gt;
-#include &lt;iomanip&gt;
-using namespace std;
-int main() {
-    double x;
-    printf("%.15lf\n", x);
-    cout &lt;&lt; fixed &lt;&lt; setprecision(15) &lt;&lt; x &lt;&lt; endl;
 }
             </code></pre>
           </section>
@@ -723,23 +749,6 @@ cout &lt;&lt; __builtin_popcount(a) &lt;&lt; endl;
           </section>
         </section>
         <section>
-          <h2>資源</h2>
-          <ul>
-            <li><a href="http://www.tcgs.tc.edu.tw:1218/Problems">Green Judge</a>（台中女中，最多基礎題目）</li>
-            <li><a href="http://zerojudge.tw/">Zerojudge</a>（＊題目品質不一，不過至少可以測NPSC）</li>
-            <li><a href="http://hoj.twbbs.org/judge/">HSNU Online Judge</a>（師大附中，請確實填好資料）</li>
-            <li><a href="http://tioj.ck.tp.edu.tw/">TIOJ Infor Online Judge</a>（建中，原名「Temporary」，Temporary了幾年之後終於脫胎換骨了XD）</li>
-          </ul>
-          <h3>不怕英文的話，多的不得了</h3>
-          <ul>
-            <li><a href="http://codeforces.com/">Codeforces</a></li>
-            <li><a href="http://usaco.org/">USACO</a></li>
-            <li><a href="http://www.topcoder.com/">TopCoder</a></li>
-            <li><a href="http://uva.onlinejudge.org/">UVa Online Judge</a></li>
-            <li><a href="http://www.spoj.com/">Sphere Online Judge</a></li>
-          </ul>
-        </section>
-        <section>
           <section>
             <h2>最無聊的A + B Problem</h2>
             <p>讀入兩個整數（絕對值不會「很大」），輸出這兩個數字之和</p>
@@ -782,8 +791,25 @@ int main() {
           <h2>你已經可以寫很多題目了</h2>
           <p>（加一點點數學底子）</p>
           <p><a href="http://www.tcgs.tc.edu.tw:1218/Problems">Green Judge基礎題庫</a></p>
-          <p>TIOJ <a href="http://tioj.ck.tp.edu.tw/problems/1003">1003</a>, <a href="http://tioj.ck.tp.edu.tw/problems/1004">1004</a>, <a href="http://tioj.ck.tp.edu.tw/problems/1005">1005</a>(<a href="#/10/7">會輸出浮點數輸出到第X位</a>)</p>
+          <p>TIOJ <a href="http://tioj.ck.tp.edu.tw/problems/1003">1003</a>, <a href="http://tioj.ck.tp.edu.tw/problems/1004">1004</a>, <a href="http://tioj.ck.tp.edu.tw/problems/1005">1005</a>(<a href="#/10/5">會輸出浮點數輸出到第X位</a>)</p>
           <p>ZJ <a href="http://zerojudge.tw/ShowProblem?problemid=a005">a005</a>, <a href="http://zerojudge.tw/ShowProblem?problemid=a147">a147</a>, <a href="http://zerojudge.tw/ShowProblem?problemid=a038">a038</a>, <a href="http://zerojudge.tw/ShowProblem?problemid=a034">a034</a></p>
+        </section>
+        <section>
+          <h2>資源</h2>
+          <ul>
+            <li><a href="http://www.tcgs.tc.edu.tw:1218/Problems">Green Judge</a>（台中女中，最多基礎題目）</li>
+            <li><a href="http://zerojudge.tw/">Zerojudge</a>（＊題目品質不一，不過至少可以測NPSC）</li>
+            <li><a href="http://hoj.twbbs.org/judge/">HSNU Online Judge</a>（師大附中，請確實填好資料）</li>
+            <li><a href="http://tioj.ck.tp.edu.tw/">TIOJ Infor Online Judge</a>（建中，原名「Temporary」，Temporary了幾年之後終於脫胎換骨了XD）</li>
+          </ul>
+          <h3>不怕英文的話，多的不得了</h3>
+          <ul>
+            <li><a href="http://codeforces.com/">Codeforces</a></li>
+            <li><a href="http://usaco.org/">USACO</a></li>
+            <li><a href="http://www.topcoder.com/">TopCoder</a></li>
+            <li><a href="http://uva.onlinejudge.org/">UVa Online Judge</a></li>
+            <li><a href="http://www.spoj.com/">Sphere Online Judge</a></li>
+          </ul>
         </section>
         <section>
           <section>
@@ -956,7 +982,7 @@ for (int i = 0; i &lt; length; i++) {
             <h2>Big-O Notation</h2>
             <p><a href="https://en.wikipedia.org/wiki/Time_complexity#Table_of_common_time_complexities">Wikipedia</a> |
             <a href="https://zh.wikipedia.org/wiki/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6#.E5.B8.B8.E8.A7.81.E6.97.B6.E9.97.B4.E5.A4.8D.E6.9D.82.E5.BA.A6.E5.88.97.E8.A1.A8">維基百科</a></p>
-            <table>
+            <table class="reveal">
               <tr><th>O</th><th>n?</th></tr>
               <tr><td>O(log n)</td><td>10<sup>100</sup>+</td></tr>
               <tr><td>O(n)</td><td>10<sup>6</sup> ~ 10<sup>7</sup></td></tr>
@@ -1101,7 +1127,6 @@ int fibo(int ix) {
             </ul>
             <p class="fragment">有用嗎？為什麼？</p>
             <p class="fragment">如果紅色的字母是同一個呢？</p>
-            <p class="fragment"><a href="http://hoj.twbbs.org/judge/problem/view/31">HOJ 31</a></p>
           </section>
           <section>
             <pre><code data-trim class="cpp">
@@ -1117,9 +1142,19 @@ for (int i = 1; i &lt;= an; i++) {
             </code></pre>
           </section>
           <section>
+            <h2>LCS 最長子序列</h2>
+            <ul>
+              <li><a href="http://zerojudge.tw/ShowProblem?problemid=c001">ZJ c001</a></li>
+              <li><a href="http://zerojudge.tw/ShowProblem?problemid=a252">ZJ a252</a></li>
+              <li><a href="http://hoj.twbbs.org/judge/problem/view/31">HOJ 31</a></li>
+              <li><a href="http://codeforces.com/contest/463/problem/D">Codeforces R#264 Div 2 B</a></li>
+              <li><a href="http://codeforces.com/contest/346/problem/B">Codeforces R#201 Div 1 B</a></li>
+            </ul>
+          </section>
+          <section>
             <h2>背包問題</h2>
             <p>total 100kg → $?</p>
-            <table>
+            <table class="reveal">
               <tr><td>14kg</td><td>$25</td></tr>
               <tr><td>21kg</td><td>$36</td></tr>
               <tr><td>39kg</td><td>$60</td></tr>
@@ -1133,7 +1168,7 @@ for (int i = 1; i &lt;= an; i++) {
             <h2>背包問題</h2>
             <p>全部檢查？<span class="fragment">O(2<sup>n</sup>)</span></p>
             <p class="fragment">其他子問題？</p>
-            <table class="fragment">
+            <table class="reveal fragment">
               <tr><td><strong>14kg</strong></td><td><strong>$25</strong></td></tr>
               <tr><td>21kg</td><td>$36</td></tr>
               <tr><td>39kg</td><td>$60</td></tr>
