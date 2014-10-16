@@ -12,7 +12,7 @@
     <style>table.centertable td, table.centertable th { text-align: center; }</style>
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
-    <style>.reveal sup, .reveal sub { font-size: 75%; }</style>
+    <style>.reveal sup, .reveal sub { font-size: 75%; } strong { color: #f99; }</style>
 
     <!-- If the query includes 'print-pdf', include the PDF print sheet -->
     <script>
@@ -196,14 +196,17 @@ isPrime n
         <section>
           <section>
             <h2>GCD</h2>
+          </section>
+          <section>
+            <h2>GCD</h2>
             <p>gcd(a, b) = ?</p>
-            <ol>
+            <ol class="fragment">
               <li>If b = 0 then gcd(a, b) = a</li>
               <li>If b ≠ 0 then gcd(a, b) = gcd(b, a mod b)</li>
             </ol>
-            <p>「= 0」、「mod」是有限、明確、有效的。</p>
-            <p>在GCD裡面再計算一次GCD是明確、有效的（做同樣的判斷、計算，直到有答案為止）。</p>
-            <p>是有限的（為什麼？）</p>
+            <p class="fragment">「= 0」、「mod」是有限、明確、有效的。</p>
+            <p class="fragment">在GCD裡面再計算一次GCD是明確、有效的（做同樣的判斷、計算，直到有答案為止）。</p>
+            <p class="fragment">是有限的（為什麼？）</p>
           </section>
           <section>
             <h2>GCD</h2>
@@ -236,7 +239,7 @@ isPrime n
           <h2>比賽</h2>
           <ul>
             <li>學科能力競賽－校內賽、地區賽、全國賽</li>
-            <li>選訓營、IOI</li>
+            <li>選訓營、(APIO、)IOI</li>
             <li>NPSC (@ 台大)</li>
             <li>ACM-ICPC</li>
             <li>網上：Codeforces, TopCoder, USACO, Google Code Jam etc.</li>
@@ -426,7 +429,6 @@ if (a == 0 || b == 0) {
           <section>
             <h2><code>&lt;algorithm&gt;</code>, <code>&lt;vector&gt;</code></h2>
             <pre><code data-trim class="cpp">
-#include &lt;cstdio&gt;
 #include &lt;algorithm&gt;
 #include &lt;vector&gt;
 using namespace std;
@@ -434,7 +436,7 @@ int a[100];
 vector&lt;int&gt; v;
 int main() {
     for (int i = 0; i &lt; 100; i++) {
-        scanf("%d", &amp;a[i]);
+        cin &gt;&gt; a[i];
     }
     for (int i = 0; i &lt; 100; i++) {
         int x; scanf("%d", &amp;x);
@@ -500,6 +502,21 @@ int main() {
               <li><code>%d</code> = int</li>
               <li><code>%lld</code> OR <code>%I64d</code> (看OS) = long long</li>
             </ul>
+          </section>
+          <section>
+            <h2><code>&lt;cstdio&gt;</code></h2>
+            <p>不過如果要輸出浮點數的時候⋯⋯</p>
+            <pre><code data-trim class="cpp">
+#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+int main() {
+    double x;
+    printf("%.15lf\n", x);
+    cout &lt;&lt; fixed &lt;&lt; setprecision(15) &lt;&lt; x &lt;&lt; endl;
+}
+            </code></pre>
           </section>
           <section>
             <h2>reference</h2>
@@ -762,6 +779,13 @@ int main() {
           <p><a href="http://zerojudge.tw/ShowProblem?problemid=b209">Zerojudge b209</a>。請自己閱讀題目。還沒有AC過競賽題目的人可以先寫它。</p>
         </section>
         <section>
+          <h2>你已經可以寫很多題目了</h2>
+          <p>（加一點點數學底子）</p>
+          <p><a href="http://www.tcgs.tc.edu.tw:1218/Problems">Green Judge基礎題庫</a></p>
+          <p>TIOJ <a href="http://tioj.ck.tp.edu.tw/problems/1003">1003</a>, <a href="http://tioj.ck.tp.edu.tw/problems/1004">1004</a>, <a href="http://tioj.ck.tp.edu.tw/problems/1005">1005</a>(<a href="#/10/7">會輸出浮點數輸出到第X位</a>)</p>
+          <p>ZJ <a href="http://zerojudge.tw/ShowProblem?problemid=a005">a005</a>, <a href="http://zerojudge.tw/ShowProblem?problemid=a147">a147</a>, <a href="http://zerojudge.tw/ShowProblem?problemid=a038">a038</a>, <a href="http://zerojudge.tw/ShowProblem?problemid=a034">a034</a></p>
+        </section>
+        <section>
           <section>
             <h2>排序(Sorting)</h2>
             <p>基本的逃不掉。</p>
@@ -827,15 +851,21 @@ for (int i = 0; i &lt; length; i++) {
               <li>...</li>
             </ul>
           </section>
+          <section>
+            <h2>排序(Sorting)</h2>
+            <p>不過幾乎所有競賽中都輪不到自己寫～</p>
+            <p><code>std::sort(v.begin(), v.end());</code></p>
+          </section>
         </section>
         <section>
           <section>
-            <h2>Time Complexity 時間複雜度</h2>
+            <h2>時間複雜度</h2>
+            <h3>Time Complexity</h3>
             <p>程式跑得夠快很重要（不然會<strong>TLE</strong>！）</p>
             <p>不過怎麼知道「多快」呢？</p>
           </section>
           <section>
-            <h2>Time Complexity 時間複雜度</h2>
+            <h2>時間複雜度</h2>
             <pre><code data-trim data-noescape class="bash">
 $ time ./<a href="http://usaco.org/index.php?page=viewproblem2&cpid=436" style="text-decoration: underline">fairphoto</a>
 real   0m0.771s
@@ -856,7 +886,7 @@ sys    0m0.005s
             </code></pre>
           </section>
           <section>
-            <h2>Time Complexity 時間複雜度</h2>
+            <h2>時間複雜度</h2>
             <p>不能只用跑的⋯⋯</p>
             <pre><code data-trim data-noescape class="cpp">
 for (int i = 0; i &lt; length; i++) {
@@ -872,7 +902,7 @@ for (int i = 0; i &lt; length; i++) {
             <p>那一步會被跑最多次？</p>
           </section>
           <section>
-            <h2>Time Complexity 時間複雜度</h2>
+            <h2>時間複雜度</h2>
             <pre><code data-trim class="cpp">
 for (int i = 0; i &lt; length; i++) {
   int minIndex = i;
@@ -915,7 +945,7 @@ for (int i = 0; i &lt; length; i++) {
             <p class="fragment">(c<sub>1</sub>/2 + c<sub>2</sub>/2) × n<sup>2</sup> + &hellip;</p>
             <p class="fragment"><strong>O(n<sup>2</sup>)</strong></p>
             <p class="fragment">f(x) ∈ O(g(x)) &hArr; ∃ M, x<sub>0</sub> s.t. ∀ x &gt; x<sub>0</sub>, |f(x)| ≤ M|g(x)|</p>
-            <p class="fragment">（更嚴謹的話可以寫Θ(n<sup>2</sup>)）</p>
+            <p class="fragment">（更嚴謹的話可以寫Big-Theta Notation: Θ(n<sup>2</sup>)）</p>
           </section>
           <section>
             <h2>Big-O Notation</h2>
@@ -969,12 +999,159 @@ for (int i = 0; i &lt; 123456789; i++) {
           <section>
             <h2>Exponentiation</h2>
             <p>10<sup>123456789</sup> = 10<sup>123456788</sup> × 10 mod 10<sup>9</sup> + 7</p>
+            <p>10<sup>123456789</sup> = 10<sup>123456787</sup> × 10 × 10 mod 10<sup>9</sup> + 7</p>
+            <p>10<sup>123456789</sup> = 10<sup>123456786</sup> × 10 × 10 × 10 mod 10<sup>9</sup> + 7</p>
+            <p>如果是競賽這樣算大概會TLE，不過自己跑應該還是跑得出來</p>
             <p class="fragment">挑戰計算：2<sup>10<sup>16</sup></sup> mod 10<sup>17</sup> + 3</p>
             <p class="fragment">Hint: 10<sup>123456789</sup> = 10<sup>61728394</sup> × 10<sup>61728394</sup> × 10</p>
           </section>
         </section>
         <section>
-          <h2>Prime Testing</h2>
+          <section>
+            <h2>Dynamic Programming (DP)</h2>
+            <p>並非單一演算法，而是一套想法，可以發展很多演算法。</p>
+          </section>
+          <section>
+            <h2>Dynamic Programming (DP)</h2>
+            <p>把一個問題切成小塊。</p>
+            <p>重複子問題overlapping subproblems</p>
+            <p>最佳子結構optimal substructure</p>
+          </section>
+          <section>
+            <h2>Dynamic Programming (DP)</h2>
+            <p>Fibonacci</p>
+            <pre><code data-trim class="cpp">
+int fibo(int ix) {
+    // F(0) = 0, F(1) = 1
+    if (ix == 0 || ix == 1) return ix;
+    return fibo(ix - 1) + fibo(ix - 2);
+}
+            </code></pre>
+            <p>跑跑看？</p>
+          </section>
+          <section>
+            <h2>Dynamic Programming (DP)</h2>
+            <p>fibo(10)</p>
+            <p class="fragment">fibo(9) + fibo(8)</p>
+            <p class="fragment">fibo(8) + fibo(7) + fibo(8)</p>
+            <p class="fragment"><strong>fibo(8)</strong> + fibo(7) + <strong>fibo(8)</strong><br/>Overlapping Subproblems!</p>
+          </section>
+          <section>
+            <h2>Dynamic Programming (DP)</h2>
+            <p>Fibonacci: Bottom-Up</p>
+            <pre class="fragment"><code data-trim class="cpp">
+int fibo[50];
+void init() {
+    fibo[0] = 0;
+    fibo[1] = 1;
+    for (int i = 2; i &lt; 50; i++) fibo[i] = fibo[i-1] + fibo[i-2];
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>Dynamic Programming (DP)</h2>
+            <p>Fibonacci: Top-Down (Memoization)</p>
+            <pre class="fragment"><code data-trim class="cpp">
+int _fibo[50];
+void init() {
+    for (int i = 0; i &lt; 50; i++) _fibo[i] = -1;
+}
+int fibo(int ix) {
+    if (_fibo[ix] != -1) return _fibo[ix];
+    if (ix == 0 || ix == 1) return _fibo[ix] = ix;
+    return _fibo[ix] = fibo(ix - 1) + fibo(ix - 2);
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>當然不是永遠那麼容易</h2>
+            <p>問題是「如何決定什麼是子問題？」</p>
+            <p class="fragment">要求：</p>
+            <ul>
+              <li class="fragment">「如果我知道子問題的解，就知道原問題的解」
+                <ul>
+                <li>「如果我知道子問題的子問題的解，就知道子問題的解」</li>
+                </ul>
+              </li>
+              <li class="fragment">「子問題不太多」</li>
+            </ul>
+            <p class="fragment">經驗</p>
+            <p class="fragment">Longest Common Subsequence</p>
+          </section>
+          <section>
+            <h2>Intro: Subsequence 子序列</h2>
+            <p>"dynamicprogramming"</p>
+            <p>"dynamic<strong>program</strong>ming" → "program"</p>
+            <p>"dynam<strong>i</strong>cpr<strong>o</strong>gramm<strong>i</strong>ng" → "ioi"</p>
+            <p>"dynamicprogramming" → ""</p>
+            <p>"<strong>dynamicprogramming</strong>" → "dynamicprogramming"</p>
+          </section>
+          <section>
+            <h2>LCS 最長子序列</h2>
+            <p>"dynamicprogramming" vs "algorithms"</p>
+            <p>"dyn<strong>a</strong>micpro<strong>gr</strong>amm<strong>i</strong>ng" vs "<strong>a</strong>l<strong>g</strong>o<strong>ri</strong>thms" → "agri"</p>
+            <p class="fragment">哪裡有子問題？</p>
+          </section>
+          <section>
+            <h2>LCS 最長子序列</h2>
+            <p>"dynamicprogrammin<strong>g</strong>" vs "algorithm<strong>s</strong>"</p>
+            <ul class="fragment">
+              <li>"dynamicprogrammin" vs "algorithm<strong>s</strong>"</li>
+              <li>"dynamicprogrammin<strong>g</strong>" vs "algorithm"</li>
+            </ul>
+            <p class="fragment">有用嗎？為什麼？</p>
+            <p class="fragment">如果紅色的字母是同一個呢？</p>
+            <p class="fragment"><a href="http://hoj.twbbs.org/judge/problem/view/31">HOJ 31</a></p>
+          </section>
+          <section>
+            <pre><code data-trim class="cpp">
+for (int i = 1; i &lt;= an; i++) {
+    for (int j = 1; j &lt;= bn; j++) {
+        dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+        if (a[i-1] == b[j-1])
+            dp[i][j] = max(dp[i][j], 1 + dp[i-1][j-1]);
+        printf("%d ", dp[i][j]);
+    }
+    printf("\n");
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>背包問題</h2>
+            <p>total 100kg → $?</p>
+            <table>
+              <tr><td>14kg</td><td>$25</td></tr>
+              <tr><td>21kg</td><td>$36</td></tr>
+              <tr><td>39kg</td><td>$60</td></tr>
+              <tr><td>60kg</td><td>$82</td></tr>
+              <tr><td>82kg</td><td>$99</td></tr>
+            </table>
+            <p>有三種版本：01，無限，Fractional</p>
+            <p>第三種不需要DP（為什麼？）</p>
+          </section>
+          <section>
+            <h2>背包問題</h2>
+            <p>全部檢查？<span class="fragment">O(2<sup>n</sup>)</span></p>
+            <p class="fragment">其他子問題？</p>
+            <table class="fragment">
+              <tr><td><strong>14kg</strong></td><td><strong>$25</strong></td></tr>
+              <tr><td>21kg</td><td>$36</td></tr>
+              <tr><td>39kg</td><td>$60</td></tr>
+              <tr><td>60kg</td><td>$82</td></tr>
+              <tr><td>82kg</td><td>$99</td></tr>
+            </table>
+            <p class="fragment">100kg → $? | 86kg → $?</p>
+            <p class="fragment">| 72kg → $? | 58kg → $? | 44kg → $? | 30kg → $? | 16kg → $? | 2kg → $?</p>
+          </section>
+          <section>
+            <h2>背包問題</h2>
+            <p>Zerojudge <a href="http://zerojudge.tw/ShowProblem?problemid=d862">d862</a> <a href="http://zerojudge.tw/ShowProblem?problemid=a455">a455</a> <a href="http://zerojudge.tw/ShowProblem?problemid=a350">a350</a></p>
+          </section>
+          <section>
+            <h2>自己試試看</h2>
+            <p>TIOJ <a href="http://tioj.ck.tp.edu.tw/problems/1007">1007</a>, <a href="http://tioj.ck.tp.edu.tw/problems/1014">1014</a>, <a href="http://tioj.ck.tp.edu.tw/problems/1019">1019</a></p>
+            <p>Codeforces <a href="http://codeforces.com/problemset/problem/455/A">R#260 Div1A</a>, <a href="http://codeforces.com/problemset/problem/417/A">RCC 2014 Div2A</a>, <a href="http://codeforces.com/problemset/problem/414/B">R#240 Div1B</a></p>
+          </section>
         </section>
       </div>
     </div>
