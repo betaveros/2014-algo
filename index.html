@@ -9,10 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="css/reveal.min.css">
     <link rel="stylesheet" href="css/theme/default.css" id="theme">
-    <style>table.centertable td, table.centertable th { text-align: center; }</style>
+    <style>
+      table.centertable td, table.centertable th { text-align: center; }
+      .reveal sup, .reveal sub { font-size: 75%; } strong { color: #f99; }
+      table.boxed { border-collapse: collapse; }
+      table.boxed td { border: 2px solid silver; }
+      table.boxed td.noboxed { border-width: 0; }
+    </style>
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
-    <style>.reveal sup, .reveal sub { font-size: 75%; } strong { color: #f99; }</style>
 
     <!-- If the query includes 'print-pdf', include the PDF print sheet -->
     <script>
@@ -40,7 +45,7 @@
 
         <section>
           <section>
-            <h2>程式世界之大</h2>
+            <h2>程式世界</h2>
           </section>
           <section>
             <h2>C(++)</h2>
@@ -84,7 +89,6 @@ def isPrime(n):
               <li>雖然名字類似，但跟「Java」語言其實不像</li>
               <li>設計有不少（公認為的）缺點⋯⋯例如，沒有整數，只有浮點數⋯⋯</li>
               <li><code>[1] != [1]</code>, <code>[1] == 1</code>!?</li>
-              <li>但網路上已經躲不掉，<a href="https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS">於是乎⋯⋯</a></li>
             </ul>
           <pre><code data-trim class="javascript">
 function isPrime(n) {
@@ -117,10 +121,10 @@ isPrime n
             <ul>
               <li>C++ ~ Java, Objective-C, C#, D, Go, Rust</li>
               <li>Python, JavaScript ~ Perl, PHP, Ruby, Lua</li>
-              <li>compile to JavaScript ~ CoffeeScript, Coco, LiveScript</li>
+              <li><a href="https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS">compile to JavaScript</a> ~ CoffeeScript, Coco, LiveScript, etc.</li>
               <li>Haskell ~ OCaml/SML, F#, Scala</li>
               <li>還有一大群Lisp: Common Lisp, Scheme, Clojure, Racket</li>
-              <li>看<a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">TIOBE index</a>（雖然它的算法也飽受批評）</li>
+              <li>看<a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">TIOBE index</a>（雖然它的算法也有人批評）</li>
             </ul>
           </section>
           <section>
@@ -168,7 +172,7 @@ isPrime n
               <li><strong>比賽</strong></li>
             </ul>
             <p>
-            當然做其他事情也需要學演算法，但更會遇到很多架構的問題（如何把子程序、物件寫整齊，以便日後修改或是測試），或是需要學習用各種模組跟API（如何用程式在Facebook上貼文），或是debug。
+            當然做其他事情也需要學演算法，但更會遇到很多<strong>架構／設計</strong>的問題，或是需要學習用各種<strong>模組跟API</strong>，或是<strong>debug</strong>。
             </p>
           </section>
         </section>
@@ -837,14 +841,14 @@ int main() {
             <h2>Selection Sort（選擇排序法）</h2>
             <pre><code data-trim class="cpp">
 for (int i = 0; i &lt; length; i++) {
-  int minIndex = i;
-  for (int j = i + 1; j &lt; length; j++) {
-    if (a[j] &lt; a[minIndex]) minIndex = j;
-  }
-  if (minIndex != i) {
-    int tmp = a[i]; a[i] = a[minIndex]; a[minIndex] = t;
-    // swap(a[i], a[minIndex]); in &lt;algorithm&gt;
-  }
+    int minIndex = i;
+    for (int j = i + 1; j &lt; length; j++) {
+        if (a[j] &lt; a[minIndex]) minIndex = j;
+    }
+    if (minIndex != i) {
+        int tmp = a[i]; a[i] = a[minIndex]; a[minIndex] = t;
+        // swap(a[i], a[minIndex]); in &lt;algorithm&gt;
+    }
 }
             </code></pre>
           </section>
@@ -934,13 +938,13 @@ sys    0m0.005s
             <p>不能只用跑的⋯⋯</p>
             <pre><code data-trim data-noescape class="cpp">
 for (int i = 0; i &lt; length; i++) {
-  int minIndex = i;
-  for (int j = i + 1; <span class="fragment highlight-red">j &lt; length; j++</span>) {
-    <span class="fragment highlight-red">if (a[j] &lt; a[minIndex]) minIndex = j;</span>
-  }
-  if (minIndex != i) {
-    swap(a[i], a[minIndex]);
-  }
+    int minIndex = i;
+    for (int j = i + 1; <span class="fragment highlight-red">j &lt; length; j++</span>) {
+        <span class="fragment highlight-red">if (a[j] &lt; a[minIndex]) minIndex = j;</span>
+    }
+    if (minIndex != i) {
+        swap(a[i], a[minIndex]);
+    }
 }
             </code></pre>
             <p>那一步會被跑最多次？</p>
@@ -949,13 +953,13 @@ for (int i = 0; i &lt; length; i++) {
             <h2>時間複雜度</h2>
             <pre><code data-trim class="cpp">
 for (int i = 0; i &lt; length; i++) {
-  int minIndex = i;
-  for (int j = i + 1; j &lt; length; j++) {
-    if (a[j] &lt; a[minIndex]) minIndex = j;
-  }
-  if (minIndex != i) {
-    swap(a[i], a[minIndex]);
-  }
+    int minIndex = i;
+    for (int j = i + 1; j &lt; length; j++) {
+        if (a[j] &lt; a[minIndex]) minIndex = j;
+    }
+    if (minIndex != i) {
+        swap(a[i], a[minIndex]);
+    }
 }
             </code></pre>
             <p class="fragment">檢查<code>j &lt; length</code>會被執行n(n+1)/2次</p>
@@ -1022,6 +1026,77 @@ for (int i = 0; i &lt; length; i++) {
               <li>TLE</li>
             </ul>
             <p>不過這種題目很少</p>
+          </section>
+          <section>
+            <h2>Merge Sort?</h2>
+            <p>花的時間叫做T(n)</p>
+            <p class="fragment">排序左半 → T(n/2)</p>
+            <p class="fragment">排序右半 → T(n/2)</p>
+            <p class="fragment">合併：O(n)</p>
+            <p class="fragment"><strong>T(n) = 2T(n/2) + kn</strong></p>
+            <p class="fragment"><strong>???</strong></p>
+          </section>
+          <section>
+            <h2>Merge Sort?</h2>
+            <table class="reveal centertable boxed">
+            <tr><td colspan="8">8</td></tr>
+            <tr>
+              <td colspan="4">4</td>
+              <td colspan="4">4</td>
+            </tr>
+            <tr>
+              <td colspan="2">2</td>
+              <td colspan="2">2</td>
+              <td colspan="2">2</td>
+              <td colspan="2">2</td>
+            </tr>
+            <tr>
+              <td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td>
+            </tr>
+            </table>
+          </section>
+          <section>
+            <h2>Merge Sort?</h2>
+            <table class="reveal centertable boxed">
+            <tr><td colspan="13">13</td></tr>
+            <tr>
+              <td colspan="7">7</td>
+              <td colspan="6">6</td>
+            </tr>
+            <tr>
+              <td colspan="4">4</td>
+              <td colspan="3">3</td>
+              <td colspan="3">3</td>
+              <td colspan="3">3</td>
+            </tr>
+            <tr>
+              <td colspan="2">2</td>
+              <td colspan="2">2</td>
+              <td colspan="2">2</td>
+              <td>1</td>
+              <td colspan="2">2</td>
+              <td>1</td>
+              <td colspan="2">2</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td class="noboxed"></td>
+              <td>1</td>
+              <td>1</td>
+              <td class="noboxed"></td>
+              <td>1</td>
+              <td>1</td>
+              <td class="noboxed"></td>
+            </tr>
+            </table>
+            <p class="fragment"><strong>O(n log n)</strong>，也是一般*排序最好的速度</p>
+            <p>嚴謹／一般做法，參見<a href="https://en.wikipedia.org/wiki/Master_theorem">Master Theorem</a></p>
           </section>
         </section>
         <section>
@@ -1172,7 +1247,7 @@ for (int i = 1; i &lt;= an; i++) {
           <section>
             <h2>背包問題</h2>
             <p>total 100kg → $?</p>
-            <table class="reveal">
+            <table class="reveal centertable">
               <tr><td>14kg</td><td>$25</td></tr>
               <tr><td>21kg</td><td>$36</td></tr>
               <tr><td>39kg</td><td>$60</td></tr>
@@ -1186,7 +1261,7 @@ for (int i = 1; i &lt;= an; i++) {
             <h2>背包問題</h2>
             <p>全部檢查？<span class="fragment">O(2<sup>n</sup>)</span></p>
             <p class="fragment">其他子問題？</p>
-            <table class="reveal fragment">
+            <table class="reveal fragment centertable">
               <tr><td><strong>14kg</strong></td><td><strong>$25</strong></td></tr>
               <tr><td>21kg</td><td>$36</td></tr>
               <tr><td>39kg</td><td>$60</td></tr>
@@ -1205,6 +1280,9 @@ for (int i = 1; i &lt;= an; i++) {
             <p>TIOJ <a href="http://tioj.ck.tp.edu.tw/problems/1007">1007</a>, <a href="http://tioj.ck.tp.edu.tw/problems/1014">1014</a>, <a href="http://tioj.ck.tp.edu.tw/problems/1019">1019</a>, <a href="http://tioj.ck.tp.edu.tw/problems/1029">1029</a></p>
             <p>Codeforces <a href="http://codeforces.com/problemset/problem/455/A">R#260 Div1A</a>, <a href="http://codeforces.com/problemset/problem/417/A">RCC 2014 Div2A</a>, <a href="http://codeforces.com/problemset/problem/414/B">R#240 Div1B</a></p>
           </section>
+        </section>
+        <section>
+          <h2>The End</h2>
         </section>
       </div>
     </div>
