@@ -1124,6 +1124,23 @@ for (int i = 0; i &lt; 123456789; i++) {
             <p class="fragment">挑戰計算：2<sup>10<sup>16</sup></sup> mod 10<sup>17</sup> + 3</p>
             <p class="fragment">Hint: 10<sup>123456789</sup> = 10<sup>61728394</sup> × 10<sup>61728394</sup> × 10</p>
           </section>
+          <section>
+            <h2>這樣乘會爆long long的說</h2>
+            <p>對不起我錯了</p>
+            <p>小心的話，在蠻大的mod下面乘兩個long long還是做得到的啦：</p>
+            <pre><code data-trim class="cpp">
+long long mmul(long long a, long long b) {
+    long long res = 0;
+    while (a) {
+        if (a % 2 == 1) res = (res + b) % MOD;
+        a /= 2;
+        b = (b * 2) % MOD;
+    }
+    return res;
+}
+</code></pre>
+            <p>會做了嗎？</p>
+          </section>
         </section>
         <section>
           <section>
