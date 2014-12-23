@@ -60,13 +60,6 @@
             <p>方向（即一個A到B的邊跟一個B到A的邊一不一樣）有時候重要，有時候不重要。重要的時候，是<strong>有向圖</strong>；不重要的時候，是<strong>無向圖</strong></p>
           </section>
           <section>
-            <h2>Graph 圖</h2>
-            <p>G = (V, E)</p>
-            <p>就是一堆<strong>（頂）點</strong>，跟一堆<strong>邊</strong>。</p>
-            <p>每條<strong>邊</strong>連接兩個點。</p>
-            <p>方向（即一個A到B的邊跟一個B到A的邊一不一樣）有時候重要，有時候不重要。重要的時候，是<strong>有向圖</strong>；不重要的時候，是<strong>無向圖</strong></p>
-          </section>
-          <section>
             <h2>如何儲存？</h2>
             <p>幾乎所有時候，頂點會有數字標記。</p>
             <p>邊也會有性質（權重、長度、價格、價值，分數⋯⋯）</p>
@@ -75,8 +68,43 @@
             <p class="reveal">應該先問，我們可能會如何使用儲存的圖？</p>
             <ul>
               <li class="reveal">詢問一個點有邊到那些其他點（＋那些邊的性質）</li>
-              <li class="reveal">詢問兩個點有沒有邊到（＋那些邊的性質）</li>
+              <li class="reveal">詢問兩個點之間有沒有邊（＋那些邊的性質）</li>
             </ul>
+          </section>
+          <section>
+            <h2>最常用的方法</h2>
+            <code>vector&lt;int&gt; graph[500008];</code>
+            <p><code>graph[i]</code>包含所有從頂點<code>i</code>出發的邊到另外哪一個頂點</p>
+            <p>如果邊上還要儲存其他資訊，可以用：</p>
+            <pre><code data-trim class="cpp">
+struct Edge { int to; int dist; };
+vector&lt;Edge&gt; graph[500008];
+
+// ...
+    scanf("%d%d%d", &amp;a, &amp;b, &amp;d);
+    graph[a].push_back(Edge { .to = b, .dist = d });
+// ...
+            </code></pre>
+          </section>
+          <section>
+            <h2>另外</h2>
+            <p>點很少／邊很多／需要計算每兩個點之間的東西（All-Pairs Shortest Paths）的話：</p>
+            <pre><code data-trim class="cpp">
+const int OO = 2000 &lt;&lt; 20;
+int dist[1008][1008];
+for (int i = 0; i &lt; 1008; i++)
+    for (int j = 0; j &lt; 1008; j++)
+        dist[i][j] = OO;
+
+// ...
+    scanf("%d%d%d", &amp;a, &amp;b, &amp;d);
+    dist[a][b] = min(dist[a][b], d);
+// ...
+            </code></pre>
+          </section>
+          <section>
+            <h2>最後</h2>
+            <p><code>vector&lt;Edge&gt;</code>也是有用的（Kruskal）</p>
           </section>
         </section>
         <section>
@@ -85,6 +113,11 @@
           </section>
           <section>
             <h2>Tree 性質</h2>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Grid</h2>
           </section>
         </section>
         <section>
@@ -128,6 +161,14 @@
           </section>
           <section>
             <h2>Floyd-Warshall</h2>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Minimum Spanning Tree 最小生成樹</h2>
+          </section>
+          <section>
+            <h2>Kruskal</h2>
           </section>
         </section>
         <section>
