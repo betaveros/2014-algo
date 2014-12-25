@@ -108,21 +108,67 @@ for (int i = 0; i &lt; 1008; i++)
           </section>
         </section>
         <section>
+          <h2>例子</h2>
+          <p>因為我不會找題目，所以一半是靠CodeForces的tag，一半是靠</p>
+          <pre><code data-trim class="sh">
+ack graph --cpp --files-with-matches | xargs mvim
+          </code></pre>
+          <p>一起做一個例子吧：<a href="http://codeforces.com/problemset/problem/300/B">CF R181 D2 pB. Coach</a></p>
+        </section>
+        <section>
+          <section>
+            <h2>Depth-First Search (DFS)</h2>
+            <p>最輕鬆但也最重要的演算法。看到節點就走下去遞迴。</p>
+            <a href="http://www.cs.usfca.edu/~galles/visualization/DFS.html">DFS Visualization</a>
+            <p>只需要記錄一個bool陣列，而且如果是Tree的話連這個都不用。</p>
+            <pre><code data-trim class="cpp">
+void dfs(int v) {
+    if (vis[v]) return;
+    vis[v] = true;
+    for (int w : graph[v]) dfs(w);
+}
+            </code></pre>
+            <p>（＊除非遞迴太深，要「手爆stack」）</p>
+          </section>
+        </section>
+        <section>
           <section>
             <h2>Tree</h2>
           </section>
           <section>
             <h2>Tree 性質</h2>
+            <ul>
+              <li>n個點，n &minus; 1條邊</li>
+              <li>連通</li>
+              <li>沒有圈</li>
+            </ul>
+            <p>（有人叫n個點，n條邊＋連通（＋恰一個圈）的圖「水母」）</p>
+            <a href="http://codeforces.com/problemset/problem/103/B">CF β R80 pB. Cthulhu</a>
+          </section>
+          <section>
+            <h2>Tree 性質</h2>
+            <p>題目常見的一種tree表示法是給你n &minus; 1個數字，0 ≤ a<sub>i</sub> &lt; i，a<sub>i</sub>表示節點i連到a<sub>i</sub>。這樣也很自然的出現root，就是節點0。</p>
+            <ul>
+              <li><a href="http://codeforces.com/problemset/problem/429/A">CF R245 D1 pA. Xor-tree</a></li>
+              <li><a href="http://codeforces.com/problemset/problem/115/A">CF β R87 pA. Party</a></li>
+            </ul>
+          </section>
+          <section>
+            <ul>
+              <li><a href="http://codeforces.com/problemset/problem/129/B">CF β R94 pB. Students and Shoelaces</a></li>
+              <li><a href="https://code.google.com/codejam/contest/2984486/dashboard#s=p1">GCJ 2014 R1A pB. Full Binary Tree</a></li>
+              <li><a href="http://hoj.twbbs.org/judge/problem/view/135">HOJ 135. 縫紉課</a></li>
+              <li><a href="http://hoj.twbbs.org/judge/problem/view/113">HOJ 113. 計步器</a></li>
+              <li><a href="http://codeforces.com/problemset/problem/429/A">CF R245 DI pA. Xor-tree</a></li>
+              <li><a href="http://codeforces.com/contest/437/problem/D">CF R250 D2 pD / D1 pB. The Child and Zoo</a></li>
+              <li><a href="http://codeforces.com/contest/238/problem/C">CF R148 D1 pC. World Eater Brothers</a></li>
+            </ul>
           </section>
         </section>
         <section>
           <section>
             <h2>Grid</h2>
-          </section>
-        </section>
-        <section>
-          <section>
-            <h2>Depth-First Search (DFS)</h2>
+            <a href="http://codeforces.com/problemset/problem/377/A">CF R222 pA. Maze</a>
           </section>
         </section>
         <section>
@@ -140,6 +186,16 @@ for (int i = 0; i &lt; 1008; i++)
         </section>
         <section>
           <section>
+            <h2>Disjoint-Set Union</h2>
+            <p>雖然這應該是資料結構上的東西，不過不知道要寫什麼</p>
+            <ul>
+              <li><a href="http://codeforces.com/problemset/problem/217/A">Codeforces R134 D1 pA. Ice Skating</a></li>
+              <li><a href="http://codeforces.com/problemset/problem/277/A">Codeforces R170 D1 pA. Learning Languages</a></li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section>
             <h2>Topological Sort 拓撲排序</h2>
           </section>
           <section>
@@ -149,6 +205,7 @@ for (int i = 0; i &lt; 1008; i++)
         <section>
           <section>
             <h2>Single-Source Shortest Path</h2>
+            <p>經典在<a href="http://hoj.twbbs.org/judge/problem/view/138">HOJ 138. 海綿寶寶之我要吃美味蟹堡(最短路)</a></p>
           </section>
           <section>
             <h2>Dijkstra</h2>
@@ -180,6 +237,10 @@ for (int i = 0; i &lt; 1008; i++)
           </section>
           <section>
             <h2>Flow</h2>
+          </section>
+          <section>
+            <h2>防防防防破台</h2>
+            <a href="http://codeforces.com/contest/418/problem/D">CF RCC2014 D1 pD. Big Problems for Organizers</a>
           </section>
         </section>
       </div>
