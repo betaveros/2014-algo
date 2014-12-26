@@ -235,6 +235,7 @@ bool vis[500008];
 
 deque&lt;int&gt; q;
 void bfs(int v0) {
+    vis[v0] = true;
     q.push_back(v0);
     while (!q.empty()) {
         int v = q.front();
@@ -243,10 +244,7 @@ void bfs(int v0) {
             if (!vis[w]) {
                 vis[w] = true;
                 q.push_back(w);
-            }
-        }
-    }
-}
+}   }   }   }
             </code></pre>
             <p>注意<code>push_back</code>、<code>pop_front</code>。如果兩者改成deque的同一個方向就變回DFS了。</p>
             <p>看看之前的例子能不能解決吧。</p>
@@ -294,7 +292,7 @@ void join(int a, int b) {
           </section>
           <section>
             <h2>Disjoint-Set Union</h2>
-            <pre><code data-trim class="cpp">
+            <pre><code data-trim data-noescape class="cpp">
 int parent[50008], n;
 void init() {
     for (int i = 0; i &lt; n; i++) parent[i] = i;
@@ -400,8 +398,30 @@ for (int i = 1; i &lt; n; i++)
           <section>
             <h2>Kruskal</h2>
             <p>greedy貪心的一直拿最短的邊。</p>
-            <p>不過不是所有短邊都有用。要如何維護？</p>
-            <p><strong>Disjoint-Set Union!</strong></p>
+            <p class="fragment">不過不是所有短邊都有用。要如何維護？</p>
+            <p class="fragment"><strong>Disjoint-Set Union!</strong></p>
+          </section>
+          <section>
+            <h2>Kruskal</h2>
+            <pre><code data-trim class="cpp">
+struct Edge {
+    int v1, v2, dist;
+    bool operator&lt;(const Edge &amp; o) {
+        return dist &lt; o.dist;
+    }
+};
+vector&lt;Edge&gt; edges;
+// ... read edges ...
+void kruskal() {
+    sort(edges.begin(), edges.end());
+    for (Edge &amp; e : edges) {
+        if (root(e.v1) != root(e.v2)) {
+            // ... use edge e ...
+            join(e.v1, e.v2);
+        }
+    }
+}
+            </code></pre>
           </section>
         </section>
         <section>
@@ -422,7 +442,7 @@ for (int i = 1; i &lt; n; i++)
           </section>
         </section>
         <section>
-          The End
+          <h2>The End</h2>
         </section>
       </div>
     </div>
