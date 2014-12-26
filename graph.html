@@ -48,31 +48,34 @@
           <p>謀事在人，程式在天 (<code>ioicamp.csie.org</code>)</p>
         </section>
         <section>
+          <h2>開放討論</h2>
+        </section>
+        <section>
+          <h2>Graph 圖</h2>
+          <img src="graph6.png" alt="[A graph with 6 vertices and 7 edges]" width="640" height="423"/>
+        </section>
+        <section>
+          <h2>Graph 圖</h2>
+          <p>G = (V, E)</p>
+          <p>就是一堆<strong>（頂）點</strong>，跟一堆<strong>邊</strong>。</p>
+          <p>每條<strong>邊</strong>連接兩個點。</p>
+          <p>方向（即一個A到B的邊跟一個B到A的邊一不一樣）有時候重要，有時候不重要。重要的時候，是<strong>有向圖</strong>；不重要的時候，是<strong>無向圖</strong></p>
+        </section>
+        <section>
+          <h2>如何儲存？</h2>
+          <p>幾乎所有時候，頂點會有數字標記。</p>
+          <p>邊也會有性質（權重、長度、價格、價值，分數⋯⋯）</p>
+          <p class="fragment"><code>vector&lt;pair&lt;int,int&gt; &gt;</code>？</p>
+          <p class="fragment"><code>set&lt;pair&lt;int,int&gt; &gt;</code>？</p>
+          <p class="fragment">應該先問，我們可能會如何使用儲存的圖？</p>
+          <ul>
+            <li class="fragment">詢問一個點有邊到那些其他點（＋那些邊的性質）</li>
+            <li class="fragment">詢問兩個點之間有沒有邊（＋那些邊的性質）</li>
+          </ul>
+        </section>
+        <section>
           <section>
-            <h2>Graph 圖</h2>
-            <img src="graph6.png" alt="[A graph with 6 vertices and 7 edges]" width="640" height="423"/>
-          </section>
-          <section>
-            <h2>Graph 圖</h2>
-            <p>G = (V, E)</p>
-            <p>就是一堆<strong>（頂）點</strong>，跟一堆<strong>邊</strong>。</p>
-            <p>每條<strong>邊</strong>連接兩個點。</p>
-            <p>方向（即一個A到B的邊跟一個B到A的邊一不一樣）有時候重要，有時候不重要。重要的時候，是<strong>有向圖</strong>；不重要的時候，是<strong>無向圖</strong></p>
-          </section>
-          <section>
-            <h2>如何儲存？</h2>
-            <p>幾乎所有時候，頂點會有數字標記。</p>
-            <p>邊也會有性質（權重、長度、價格、價值，分數⋯⋯）</p>
-            <p class="reveal"><code>vector&lt;pair&lt;int,int&gt; &gt;</code>？</p>
-            <p class="reveal"><code>set&lt;pair&lt;int,int&gt; &gt;</code>？</p>
-            <p class="reveal">應該先問，我們可能會如何使用儲存的圖？</p>
-            <ul>
-              <li class="reveal">詢問一個點有邊到那些其他點（＋那些邊的性質）</li>
-              <li class="reveal">詢問兩個點之間有沒有邊（＋那些邊的性質）</li>
-            </ul>
-          </section>
-          <section>
-            <h2>最常用的方法</h2>
+            <h2>最常用的方法 (Adjacency List)</h2>
             <code>vector&lt;int&gt; graph[500008];</code>
             <p><code>graph[i]</code>包含所有從頂點<code>i</code>出發的邊到另外哪一個頂點</p>
             <p>如果邊上還要儲存其他資訊，可以用：</p>
@@ -87,7 +90,26 @@ vector&lt;Edge&gt; graph[500008];
             </code></pre>
           </section>
           <section>
+            <h2><a href="http://www.cplusplus.com/reference/vector/vector/"><code>vector</code></a></h2>
+            <p>復習／細講</p>
+            <pre><code data-trim class="cpp">
+vector&lt;int&gt; vec;
+//    ^ template
+
+vec[0] = 1337;
+printf("%d", vec[0]);
+
+vec.push_back(1337);
+int x = vec.back();
+vec.pop_back();
+
+vec.size(); // warning: size_t is unsigned
+vec.empty(); // bool
+            </code></pre>
+          </section>
+          <section>
             <h2>另外</h2>
+            <p>Adjacency Matrix</p>
             <p>點很少／邊很多／需要計算每兩個點之間的東西（All-Pairs Shortest Paths）的話：</p>
             <pre><code data-trim class="cpp">
 const int OO = 2000 &lt;&lt; 20;
@@ -122,6 +144,8 @@ ack graph --cpp --files-with-matches | xargs mvim
             <a href="http://www.cs.usfca.edu/~galles/visualization/DFS.html">DFS Visualization</a>
             <p>只需要記錄一個bool陣列，而且如果是Tree的話連這個都不用。</p>
             <pre><code data-trim class="cpp">
+bool vis[500008];
+
 void dfs(int v) {
     if (vis[v]) return;
     vis[v] = true;
@@ -133,30 +157,66 @@ void dfs(int v) {
         </section>
         <section>
           <section>
+            <h2>Grid</h2>
+            <p>就算題目不直接給你一堆點跟一堆邊，還是有很多題目有「隱形」的圖，可以在上面DFS。好像棋盤似的圖特別多</p>
+            <ul>
+              <li><a href="http://tioj.ck.tp.edu.tw/problems/1013">TIOJ 1013. Fire in the forest</a></li>
+              <li><a href="http://tioj.ck.tp.edu.tw/problems/1022">TIOJ 1022. H.跑跑卡恩車</a></li>
+              <li><a href="http://codeforces.com/problemset/problem/377/A">CF R222 pA. Maze</a></li>
+              <li><a href="http://codeforces.com/problemset/problem/329/B">CF R192 pB. Biridian Forest</a></li>
+            </ul>
+            <p>⋯⋯但絕對不是唯一一種「隱形」的圖</p>
+            <p>這裡用的演算法還沒講到；請先確切了解這些題目裡的「Graph」</p>
+          </section>
+        </section>
+        <section>
+          <h2>例子</h2>
+          <p>思考題，不太需要圖論演算法：</p>
+          <ul>
+            <li><a href="http://codeforces.com/problemset/problem/330/B">CF R192 D2 pB. Road Construction</a></li>
+            <li><a href="http://codeforces.com/problemset/problem/404/C">CF R237 D2 pC. Restore Graph</a></li>
+          </ul>
+          <p>比較有演算法的題目：</p>
+          <ul>
+            <li>✓ <a href="http://codeforces.com/problemset/problem/475/B">CF Bayan 2015 Contest Warm Up pB. Strongly Connected City</a></li>
+            <li>✓ <a href="http://codeforces.com/problemset/problem/320/B">CF R189 D2 pB. Ping-Pong (Easy Version)</a></li>
+            <li><a href="http://codeforces.com/problemset/problem/489/D">CF R277.5 D2 pD. Unbearable Controversy of Being</a></li>
+          </ul>
+        </section>
+        <section>
+          <section>
             <h2>Tree</h2>
+            <img src="tree.png" alt="[xkcd 835]" width="562" height="408" />
+            <p><a href="https://xkcd.com/835/">xkcd 835</a></p>
           </section>
           <section>
-            <h2>Tree 性質</h2>
+            <h2>Tree</h2>
+            <p>一種超級重要的graph</p>
             <ul>
               <li>n個點，n &minus; 1條邊</li>
               <li>連通</li>
               <li>沒有圈</li>
             </ul>
+          </section>
+          <section>
+            <h2>Not Tree</h2>
             <p>（有人叫n個點，n條邊＋連通（＋恰一個圈）的圖「水母」）</p>
             <a href="http://codeforces.com/problemset/problem/103/B">CF β R80 pB. Cthulhu</a>
+            <a href="http://codeforces.com/problemset/problem/131/D">CF β R95 D2 pD. Subway</a>
           </section>
           <section>
             <h2>Tree 性質</h2>
             <p>題目常見的一種tree表示法是給你n &minus; 1個數字，0 ≤ a<sub>i</sub> &lt; i，a<sub>i</sub>表示節點i連到a<sub>i</sub>。這樣也很自然的出現root，就是節點0。</p>
             <ul>
-              <li><a href="http://codeforces.com/problemset/problem/429/A">CF R245 D1 pA. Xor-tree</a></li>
-              <li><a href="http://codeforces.com/problemset/problem/115/A">CF β R87 pA. Party</a></li>
+              <li>✓ <a href="http://codeforces.com/problemset/problem/115/A">CF β R87 pA. Party</a></li>
+              <li><a href="http://codeforces.com/problemset/problem/129/B">CF β R94 pB. Students and Shoelaces</a></li>
+              <li><a href="https://code.google.com/codejam/contest/2984486/dashboard#s=p1">GCJ 2014 R1A pB. Full Binary Tree</a></li>
+              <li><a href="http://tioj.ck.tp.edu.tw/problems/1106">TIOJ 1106. 遇見一株樹</a></li>
+              <li><a href="http://tioj.ck.tp.edu.tw/problems/1108">TIOJ 1108. 樹的三兄弟</a> (preorder, inorder → postorder)
             </ul>
           </section>
           <section>
             <ul>
-              <li><a href="http://codeforces.com/problemset/problem/129/B">CF β R94 pB. Students and Shoelaces</a></li>
-              <li><a href="https://code.google.com/codejam/contest/2984486/dashboard#s=p1">GCJ 2014 R1A pB. Full Binary Tree</a></li>
               <li><a href="http://hoj.twbbs.org/judge/problem/view/135">HOJ 135. 縫紉課</a></li>
               <li><a href="http://hoj.twbbs.org/judge/problem/view/113">HOJ 113. 計步器</a></li>
               <li><a href="http://codeforces.com/problemset/problem/429/A">CF R245 DI pA. Xor-tree</a></li>
@@ -167,19 +227,35 @@ void dfs(int v) {
         </section>
         <section>
           <section>
-            <h2>Grid</h2>
-            <a href="http://codeforces.com/problemset/problem/377/A">CF R222 pA. Maze</a>
-          </section>
-        </section>
-        <section>
-          <section>
             <h2>Breadth-First Search (BFS)</h2>
+            <p>DFS = 看到新的節點，馬上走；較晚看到的節點優先</p>
+            <p>BFS = 看到新的節點「預留」；較早看到的節點優先</p>
+            <pre><code data-trim class="cpp">
+bool vis[500008];
+
+deque&lt;int&gt; q;
+void bfs(int v0) {
+    q.push_back(v0);
+    while (!q.empty()) {
+        int v = q.front();
+        q.pop_front();
+        for (int w : graph[v]) {
+            if (!vis[w]) {
+                vis[w] = true;
+                q.push_back(w);
+            }
+        }
+    }
+}
+            </code></pre>
+            <p>注意<code>push_back</code>、<code>pop_front</code>。如果兩者改成deque的同一個方向就變回DFS了。</p>
+            <p>看看之前的例子能不能解決吧。</p>
           </section>
         </section>
         <section>
           <section>
             <h2>其他Search</h2>
-            <p>A*?</p>
+            <p>A*</p>
             <p>IDDFS</p>
             <p>...</p>
           </section>
@@ -205,16 +281,24 @@ void dfs(int v) {
         <section>
           <section>
             <h2>Single-Source Shortest Path</h2>
-            <p>經典在<a href="http://hoj.twbbs.org/judge/problem/view/138">HOJ 138. 海綿寶寶之我要吃美味蟹堡(最短路)</a></p>
+            <p>✓ 經典在<a href="http://hoj.twbbs.org/judge/problem/view/138">HOJ 138. 海綿寶寶之我要吃美味蟹堡(最短路)</a></p>
+            <p>or <a href="http://codeforces.com/problemset/problem/20/C">CF α R20 pC. Dijkstra?</a></p>
+            <p><a href="http://codeforces.com/problemset/problem/449/B">CF R257 D1 pB. Jzzhu and Cities</a></p>
+            <p><a href="http://codeforces.com/problemset/problem/198/B">CF R125 D1 pB. Jumping on Walls</a></p>
           </section>
           <section>
             <h2>Dijkstra</h2>
             <p>（超難念）</p>
+            <p>O(E + V log V)</p>
           </section>
         </section>
         <section>
           <section>
             <h2>All-Pairs Shortest Path</h2>
+            <p>沒有在喜歡的OJ上找到經典題qq</p>
+            <p><a href="http://codeforces.com/problemset/problem/295/B">CF R179 D1 pB. Greg and Graph</a></p>
+            <p><a href="http://codeforces.com/problemset/problem/25/C">CF β R25 pC. Roads in Berland</a></p>
+            <p>神奇思考題：<a href="http://codeforces.com/problemset/problem/472/D">CF R270 pD. Inverse the Problem</a></p>
           </section>
           <section>
             <h2>Floyd-Warshall</h2>
