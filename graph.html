@@ -219,7 +219,7 @@ void dfs(int v) {
             <ul>
               <li><a href="http://hoj.twbbs.org/judge/problem/view/135">HOJ 135. 縫紉課</a></li>
               <li><a href="http://hoj.twbbs.org/judge/problem/view/113">HOJ 113. 計步器</a></li>
-              <li><a href="http://codeforces.com/problemset/problem/429/A">CF R245 DI pA. Xor-tree</a></li>
+              <li><a href="http://codeforces.com/problemset/problem/429/A">CF R245 D1 pA. Xor-tree</a></li>
               <li><a href="http://codeforces.com/contest/437/problem/D">CF R250 D2 pD / D1 pB. The Child and Zoo</a></li>
               <li><a href="http://codeforces.com/contest/238/problem/C">CF R148 D1 pC. World Eater Brothers</a></li>
             </ul>
@@ -269,14 +269,52 @@ void bfs(int v0) {
               <li><a href="http://codeforces.com/problemset/problem/277/A">Codeforces R170 D1 pA. Learning Languages</a></li>
             </ul>
           </section>
+          <section>
+            <h2>Disjoint-Set Union</h2>
+            <p><a href="http://www.csie.ntnu.edu.tw/~u91029/Set.html#4">Disjoint Set @ 演算法筆記</a></p>
+            <p>有n個東西，形成n堆，每次會合併兩堆東西或詢問一個東西在哪一堆。</p>
+          </section>
+          <section>
+            <h2>Disjoint-Set Union</h2>
+            <pre><code data-trim class="cpp">
+int parent[50008], n;
+void init() {
+    for (int i = 0; i &lt; n; i++) parent[i] = i;
+}
+int root(int v) {
+    if (v == parent[v]) return v;
+    return root(parent[v]);
+}
+void join(int a, int b) {
+    int ra = root(a);
+    int rb = root(b);
+    if (ra != rb) parent[ra] = rb;
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>Disjoint-Set Union</h2>
+            <pre><code data-trim class="cpp">
+int parent[50008], n;
+void init() {
+    for (int i = 0; i &lt; n; i++) parent[i] = i;
+}
+int root(int v) {
+    if (v == parent[v]) return v;
+    return parent[v] = root(parent[v]); // <strong>Path Compression</strong>
+}
+void join(int a, int b) {
+    int ra = root(a);
+    int rb = root(b);
+    if (ra != rb) parent[ra] = rb;
+}
+            </code></pre>
+          </section>
         </section>
         <section>
-          <section>
-            <h2>Topological Sort 拓撲排序</h2>
-          </section>
-          <section>
-            <h2>Topological Sort 拓撲排序</h2>
-          </section>
+          <h2>Topological Sort 拓撲排序</h2>
+          <p>HOJ 開心提供了：<a href="http://hoj.twbbs.org/judge/problem/view/141">HOJ 141. 海綿寶寶之製作蟹堡(拓撲排序)</a></p>
+          <p>每次拔掉一個in-degree = 0的節點罷了</p>
         </section>
         <section>
           <section>
@@ -284,12 +322,52 @@ void bfs(int v0) {
             <p>✓ 經典在<a href="http://hoj.twbbs.org/judge/problem/view/138">HOJ 138. 海綿寶寶之我要吃美味蟹堡(最短路)</a></p>
             <p>or <a href="http://codeforces.com/problemset/problem/20/C">CF α R20 pC. Dijkstra?</a></p>
             <p><a href="http://codeforces.com/problemset/problem/449/B">CF R257 D1 pB. Jzzhu and Cities</a></p>
-            <p><a href="http://codeforces.com/problemset/problem/198/B">CF R125 D1 pB. Jumping on Walls</a></p>
+            <p><a href="http://codeforces.com/problemset/problem/198/B">CF R125 D1 pB. Jumping on Walls</a>是一個隱形graph的例子</p>
           </section>
           <section>
             <h2>Dijkstra</h2>
             <p>（超難念）</p>
-            <p>O(E + V log V)</p>
+            <p>O(E + V log V)，算出從一個頂點到其他所有點的最短距離。</p>
+            <p class="fragment"><code>dist[i]</code>記錄「目前知道」從起點到每個頂點i的最短距離。有些節點的最短距離是「確定」的，有些節點的最短距離是「暫定」的。</p>
+            <p class="fragment">每次看「暫定」的最短距離中最短一個，把它變成「確定」的（為什麼？），然後看看那個節點出去的邊能不能縮短任何其他暫定的最短距離。</p>
+            <p class="fragment">全部的距離都確定之後就大工告成了。</p>
+          </section>
+          <section>
+            <pre><code data-trim class="cpp">
+for (int i = 1; i &lt;= n; i++) dist[i] = OO;
+dist[start] = 0;
+int cur = start;
+while (cur != -1) {
+    vis[cur] = true;
+    for (Edge &amp; e : graph[cur]) {
+        dist[e.to] = min(dist[e.to], dist[cur] + e.dist);
+    }
+    cur = -1; int md = OO;
+    for (int i = 1; i &lt;= n; i++) {
+        if (!vis[i] &amp;&amp; dist[i] &lt; md) {
+            cur = i;
+            md = dist[i];
+        }
+    }
+}
+            </code></pre>
+            <p class="fragment">說好的O(E + V log V)呢？</p>
+          </section>
+          <section>
+            <pre><code data-trim class="cpp">
+for (int i = 1; i &lt;= n; i++) dist[i] = OO;
+dist[start] = 0;
+push(start);
+while (!done()) {
+    int cur = nextVertex(); // ???
+    vis[cur] = true;
+    for (Edge &amp; e : graph[cur]) {
+        dist[e.to] = min(dist[e.to], dist[cur] + e.dist);
+        update(e.to);
+    }
+}
+            </code></pre>
+            <p>可以用set假裝，也可以自己寫一個binary heap，不過其實很多時候是不需要的。</p>
           </section>
         </section>
         <section>
@@ -302,6 +380,15 @@ void bfs(int v0) {
           </section>
           <section>
             <h2>Floyd-Warshall</h2>
+            <p>O(V<sup>3</sup>)</p>
+            <p>可以用DP的角度想</p>
+            <pre><code data-trim class="cpp">
+for (int i = 1; i &lt; n; i++)
+    for (int j = 1; j &lt; n; j++)
+        for (int k = 1; k &lt; n; k++)
+            dist[j][k] = min(dist[j][k], dist[j][i] + dist[i][k]);
+            </code></pre>
+            <p><strong>注意for的順序！</strong>「過渡點」i必須在最外層。</p>
           </section>
         </section>
         <section>
