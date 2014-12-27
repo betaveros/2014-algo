@@ -63,10 +63,10 @@
         </section>
         <section>
           <h2>如何儲存？</h2>
-          <p>幾乎所有時候，頂點會有數字標記。</p>
-          <p>邊也會有性質（權重、長度、價格、價值，分數⋯⋯）</p>
+          <p>幾乎所有時候，頂點會用數字標記。</p>
           <p class="fragment"><code>vector&lt;pair&lt;int,int&gt; &gt;</code>？</p>
           <p class="fragment"><code>set&lt;pair&lt;int,int&gt; &gt;</code>？</p>
+          <p class="fragment">邊也會有性質（權重、長度、價格、價值，分數⋯⋯）</p>
           <p class="fragment">應該先問，我們可能會如何使用儲存的圖？</p>
           <ul>
             <li class="fragment">詢問一個點有邊到那些其他點（＋那些邊的性質）</li>
@@ -142,7 +142,7 @@ ack graph --cpp --files-with-matches | xargs mvim
             <h2>Depth-First Search (DFS)</h2>
             <p>最輕鬆但也最重要的演算法。看到節點就走下去遞迴。</p>
             <a href="http://www.cs.usfca.edu/~galles/visualization/DFS.html">DFS Visualization</a>
-            <p>只需要記錄一個bool陣列，而且如果是Tree的話連這個都不用。</p>
+            <p>只需要記錄一個bool陣列（而且如果是Tree的話連這個都不用）。</p>
             <pre><code data-trim class="cpp">
 bool vis[500008];
 
@@ -261,7 +261,7 @@ void bfs(int v0) {
         <section>
           <section>
             <h2>Disjoint-Set Union</h2>
-            <p>雖然這應該是資料結構上的東西，不過不知道要寫什麼</p>
+            <p>雖然這應該是資料結構課講的東西，不過應該也有圖論的味道，而且也常常在圖論上用到。</p>
             <ul>
               <li><a href="http://codeforces.com/problemset/problem/217/A">Codeforces R134 D1 pA. Ice Skating</a></li>
               <li><a href="http://codeforces.com/problemset/problem/277/A">Codeforces R170 D1 pA. Learning Languages</a></li>
@@ -270,7 +270,7 @@ void bfs(int v0) {
           <section>
             <h2>Disjoint-Set Union</h2>
             <p><a href="http://www.csie.ntnu.edu.tw/~u91029/Set.html#4">Disjoint Set @ 演算法筆記</a></p>
-            <p>有n個東西，形成n堆，每次會合併兩堆東西或詢問一個東西在哪一堆。</p>
+            <p>有n個東西，一開始形成n堆，每次會合併兩堆東西或詢問一個東西在「哪一堆」／兩個東西是不是在同一堆。</p>
           </section>
           <section>
             <h2>Disjoint-Set Union</h2>
@@ -352,20 +352,21 @@ while (cur != -1) {
             <p class="fragment">說好的O(E + V log V)呢？</p>
           </section>
           <section>
-            <pre><code data-trim class="cpp">
+            <pre><code data-trim data-noescape class="cpp">
 for (int i = 1; i &lt;= n; i++) dist[i] = OO;
 dist[start] = 0;
-push(start);
-while (!done()) {
-    int cur = nextVertex(); // ???
+<strong>update</strong>(start);
+while (!<strong>done</strong>()) {
+    int cur = <strong>nextVertex</strong>(); // ???
     vis[cur] = true;
     for (Edge &amp; e : graph[cur]) {
         dist[e.to] = min(dist[e.to], dist[cur] + e.dist);
-        update(e.to);
+        <strong>update</strong>(e.to);
     }
 }
             </code></pre>
-            <p>可以用set假裝，也可以自己寫一個binary heap，不過其實很多時候是不需要的。</p>
+            <p>可以用set假裝，也可以自己寫一個binary heap，不過其實很多時候是不需要的，O(V<sup>2</sup>)也會過。</p>
+            <p>另外，可以研究<strong>SPFA</strong></p>
           </section>
         </section>
         <section>
@@ -379,14 +380,14 @@ while (!done()) {
           <section>
             <h2>Floyd-Warshall</h2>
             <p>O(V<sup>3</sup>)</p>
-            <p>可以用DP的角度想</p>
             <pre><code data-trim class="cpp">
 for (int i = 1; i &lt; n; i++)
     for (int j = 1; j &lt; n; j++)
         for (int k = 1; k &lt; n; k++)
             dist[j][k] = min(dist[j][k], dist[j][i] + dist[i][k]);
             </code></pre>
-            <p><strong>注意for的順序！</strong>「過渡點」i必須在最外層。</p>
+            <p class="fragment"><strong>注意for的順序！</strong>「過渡點」i必須在最外層。</p>
+            <p class="fragment">可以用DP的角度想；i經過1到k的時候，<code>dist[j][k]</code>是什麼意思？</p>
           </section>
         </section>
         <section>
@@ -427,6 +428,11 @@ void kruskal() {
         <section>
           <section>
             <h2>etc（略提）</h2>
+            <p>圖論還有很多很多經典題目／演算法</p>
+          </section>
+          <section>
+            <h2>Bridge, Articulation Point</h2>
+            <p>HOJ</p>
           </section>
           <section>
             <h2>SCC</h2>
