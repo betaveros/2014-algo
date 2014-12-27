@@ -15,6 +15,7 @@
       table.boxed { border-collapse: collapse; }
       table.boxed td { border: 2px solid silver; }
       table.boxed td.noboxed { border-width: 0; }
+      a.imgsrc { font-size: 50%; }
     </style>
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
@@ -49,10 +50,30 @@
         </section>
         <section>
           <h2>開放討論</h2>
+          <p><a href="index.html">index.html</a></p>
+          <p><a href="problems.html">problems.html</a></p>
         </section>
         <section>
-          <h2>Graph 圖</h2>
-          <img src="graph6.png" alt="[A graph with 6 vertices and 7 edges]" width="640" height="423"/>
+          <section>
+            <h2>Graph 圖</h2>
+            <img src="graph6.png" alt="[A graph with 6 vertices and 7 edges]" width="640" height="423"/>
+            <p><a href="https://commons.wikimedia.org/wiki/File:6n-graf.svg" class="imgsrc">WikiCommons (public domain)</a></p>
+          </section>
+          <section>
+            <h2>Graph 圖</h2>
+            <img src="fl-graphs.png" width="596" height="480" alt="[Forbidden line subgraphs]" />
+            <p><a href="https://commons.wikimedia.org/wiki/File:Forbidden_line_subgraphs.svg" class="imgsrc">WikiCommons (public domain)</a></p>
+          </section>
+          <section>
+            <h2>Graph 圖</h2>
+            <img src="e7-graph.png" width="500" height="500" alt="[e7 graph]" />
+            <p><a href="https://commons.wikimedia.org/wiki/File:E7_graph.svg" class="imgsrc">WikiCommons (CC BY-SA 3.0, Rocchini, Tomruen)</a></p>
+          </section>
+          <section>
+            <h2>Directed Graph 有向圖</h2>
+            <img src="dag.png" width="598" height="480" alt="[e7 graph]" />
+            <p><a href="https://commons.wikimedia.org/wiki/File:Directed_acyclic_graph_2.svg" class="imgsrc">WikiCommons (public domain)</a></p>
+          </section>
         </section>
         <section>
           <h2>Graph 圖</h2>
@@ -197,6 +218,16 @@ void dfs(int v) {
               <li>連通</li>
               <li>沒有圈</li>
             </ul>
+          </section>
+          <section>
+            <h2>Tree</h2>
+            <img src="a-tree.png" alt="[a tree]" width="617" height="480" />
+            <p><a href="https://commons.wikimedia.org/wiki/File:Arbre_distance_un.svg" class="imgsrc">Wikimedia Commons (CC-BY-SA, Kilom691)</a></p>
+          </section>
+          <section>
+            <h2>Tree</h2>
+            <img src="rs-tree.png" alt="[rectilinear spanning tree]" width="480" height="480" />
+            <p><a href="https://commons.wikimedia.org/wiki/File:Rectilinear_minimum_spanning_tree.svg" class="imgsrc">WikiCommons (CC-BY-SA, Rocchini)</a></p>
           </section>
           <section>
             <h2>Not Tree</h2>
@@ -387,7 +418,7 @@ for (int i = 1; i &lt; n; i++)
             dist[j][k] = min(dist[j][k], dist[j][i] + dist[i][k]);
             </code></pre>
             <p class="fragment"><strong>注意for的順序！</strong>「過渡點」i必須在最外層。</p>
-            <p class="fragment">可以用DP的角度想；i經過1到k的時候，<code>dist[j][k]</code>是什麼意思？</p>
+            <p class="fragment">可以用DP的角度想；i經過1到x的時候，<code>dist[j][k]</code>是什麼意思？</p>
           </section>
         </section>
         <section>
