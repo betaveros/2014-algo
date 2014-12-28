@@ -348,6 +348,7 @@ void join(int a, int b) {
           <h2>Topological Sort 拓撲排序</h2>
           <p>HOJ 開心提供了：<a href="http://hoj.twbbs.org/judge/problem/view/141">HOJ 141. 海綿寶寶之製作蟹堡(拓撲排序)</a></p>
           <p>每次拔掉一個in-degree = 0的節點罷了</p>
+          <p><a href="http://www.cs.usfca.edu/~galles/visualization/TopoSortIndegree.html">Topological Sort Visualization</a></p>
         </section>
         <section>
           <section>
@@ -360,6 +361,7 @@ void join(int a, int b) {
           <section>
             <h2>Dijkstra</h2>
             <p>（超難念）</p>
+            <p><a href="http://www.cs.usfca.edu/~galles/visualization/Dijkstra.html">Dijkstra Visualization</a></p>
             <p>O(E + V log V)，算出從一個頂點到其他所有點的最短距離。</p>
             <p class="fragment"><code>dist[i]</code>記錄<strong>「目前知道」</strong>從起點到每個頂點i的最短距離。有些節點的最短距離是<strong>「確定」</strong>的，有些節點的最短距離是<strong>「暫定」</strong>的。</p>
             <p class="fragment">每次看<strong>「暫定」</strong>的最短距離中最短一個，把它變成<strong>「確定」</strong>的（為什麼？），然後看看那個節點出去的邊能不能縮短任何其他<strong>暫定</strong>的最短距離。</p>
@@ -415,6 +417,7 @@ while (!<strong>done</strong>()) {
           <section>
             <h2>Floyd-Warshall</h2>
             <p>O(V<sup>3</sup>)</p>
+            <p><a href="http://www.cs.usfca.edu/~galles/visualization/Floyd.html">Floyd-Warshall APSP Visualization</a></p>
             <pre><code data-trim class="cpp">
 for (int i = 1; i &lt; n; i++)
     for (int j = 1; j &lt; n; j++)
@@ -436,6 +439,7 @@ for (int i = 1; i &lt; n; i++)
             <p>greedy貪心的一直拿最短的邊。</p>
             <p class="fragment">不過不是所有短邊都有用。要如何維護？</p>
             <p class="fragment"><strong>Disjoint-Set Union!</strong></p>
+            <p class="fragment"><a href="http://www.cs.usfca.edu/~galles/visualization/Kruskal.html">Kruskal MST Visualzliation</a></p>
           </section>
           <section>
             <h2>Kruskal</h2>
