@@ -261,6 +261,10 @@ void dfs(int v) {
             <h2>Breadth-First Search (BFS)</h2>
             <p>DFS = 看到新的節點，馬上走；較晚看到的節點優先</p>
             <p>BFS = 看到新的節點「預留」；較早看到的節點優先</p>
+            <p><a href="http://www.cs.usfca.edu/~galles/visualization/BFS.html">BFS Visualization</a></p>
+          </section>
+          <section>
+            <h2>Breadth-First Search (BFS)</h2>
             <pre><code data-trim class="cpp">
 bool vis[500008];
 
@@ -357,9 +361,9 @@ void join(int a, int b) {
             <h2>Dijkstra</h2>
             <p>（超難念）</p>
             <p>O(E + V log V)，算出從一個頂點到其他所有點的最短距離。</p>
-            <p class="fragment"><code>dist[i]</code>記錄「目前知道」從起點到每個頂點i的最短距離。有些節點的最短距離是「確定」的，有些節點的最短距離是「暫定」的。</p>
-            <p class="fragment">每次看「暫定」的最短距離中最短一個，把它變成「確定」的（為什麼？），然後看看那個節點出去的邊能不能縮短任何其他暫定的最短距離。</p>
-            <p class="fragment">全部的距離都確定之後就大工告成了。</p>
+            <p class="fragment"><code>dist[i]</code>記錄<strong>「目前知道」</strong>從起點到每個頂點i的最短距離。有些節點的最短距離是<strong>「確定」</strong>的，有些節點的最短距離是<strong>「暫定」</strong>的。</p>
+            <p class="fragment">每次看<strong>「暫定」</strong>的最短距離中最短一個，把它變成<strong>「確定」</strong>的（為什麼？），然後看看那個節點出去的邊能不能縮短任何其他<strong>暫定</strong>的最短距離。</p>
+            <p class="fragment">全部的距離都<strong>確定</strong>之後就大工告成了。</p>
           </section>
           <section>
             <pre><code data-trim class="cpp">
@@ -464,6 +468,8 @@ void kruskal() {
           <section>
             <h2>Bridge, Articulation Point</h2>
             <p>HOJ</p>
+            <p><a href="http://hoj.twbbs.org/judge/problem/view/142">142. 海綿寶寶之觸手水母田〈一〉(橋)</a></p>
+            <p><a href="http://hoj.twbbs.org/judge/problem/view/143">143. 海綿寶寶之觸手水母田〈二〉(割點)</a></p>
           </section>
           <section>
             <h2>SCC</h2>
